@@ -1,10 +1,14 @@
 import './App.css'
+import Inicio from './Components/Inicio'
 import SideBar from './Components/SideBar'
 
 function App() {
 
   return (
-    <SideBar />
+    <div className='container'>
+      <SideBar />
+      <Inicio />
+    </div>
   )
 }
 

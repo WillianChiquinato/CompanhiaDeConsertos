@@ -1,0 +1,138 @@
+a:is(:link, :active, :visited).active {
+    background-color: #2D38B8;
+}
+
+.Efeito {
+    position: relative;
+    color: var(--cor-branco);
+    text-decoration: none;
+}
+
+.Efeito::after {
+    content: " ";
+    width: 0px;
+    height: 2px;
+    background-color: rgb(190, 190, 190);
+    position: absolute;
+    top: 55px;
+    left: 130px;
+    transition: width 0.5s;
+}
+
+.TopicosHeader a:hover::after {
+    width: 120px;
+}
+
+.HeaderContents {
+    display: flex;
+    height: 100vh;
+}
+
+/* titulo */
+.Header {
+    position: fixed;
+    width: 25%;
+    background-color: #1A0090;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+}
+
+.header-Title {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    padding: 7px 10px 0 10px;
+}
+
+.header-Title span {
+    color: white;
+    padding-top: 20px;
+}
+
+
+.imagemFundoHeader {
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.imagemHeader {
+    width: 30%;
+    height: 30%;
+    margin-bottom: 2px;
+}
+
+hr {
+    border: none;
+    height: 1.7px;
+    background-color: white;
+    margin: 0 20px 20px 20px;
+}
+
+/* Topicos */
+.TopicosHeader {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerTopico {
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    padding-left: 35px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.containerTopico:hover {
+    background-color: #2D38B8;
+}
+
+.IconTopico {
+    width: 45px;
+    height: 45px;
+    margin-right: 20px;
+}
+
+.textoTopico {
+    color: white;
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+/* Footer */
+.Footer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: black;
+}
+
+.FotterTitle {
+    color: white;
+    font-size: 24px;
+    padding: 12px 0 0 0;
+}
+
+.FooterDirect {
+    color: #AEAEAE;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.LogoTiposFooter {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 40px;
+    padding: 10px 10px 20px 10px;
+}
