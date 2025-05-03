@@ -1,0 +1,152 @@
+.Carros {
+    flex-grow: 1;
+    margin-left: 25%;
+    background-color: #EBEBEB;
+    overflow-y: auto;
+    color: black;
+}
+
+.TituloCarros {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 48px;
+    padding: 50px 0 0px 0;
+}
+
+.TituloHR {
+    background-color: black;
+    height: 2px;
+    margin: 0 70px;
+}
+
+.CarrosHR {
+    background-color: black;
+    height: 2px;
+    width: 35%;
+}
+
+.CarrosPv {
+    display: flex;
+    justify-content: start;
+    font-size: 36px;
+    padding: 150px 0 0px 20px;
+}
+
+.CarrosPv a {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    margin-left: 100px;
+}
+
+.CarrosPv a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.TituloCarrosPv {
+    font-weight: 600;
+}
+
+.CarrosSeg {
+    display: flex;
+    justify-content: start;
+    font-size: 36px;
+    padding: 150px 0 0px 20px;
+}
+
+.CarrosSeg a {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    margin-left: 100px;
+}
+
+.CarrosSeg a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.TituloCarrosSeg {
+    font-weight: 600;
+}
+
+
+/* adicao de carros */
+.CarrosList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    height: auto;
+    margin: 30px;
+}
+
+.BoxAddCarro {
+    width: calc(22% - 30px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    padding: 35px;
+    border: solid 2px black;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.397);
+}
+
+.BoxAddCarro a img {
+    width: 90px;
+    height: 90px;
+}
+
+/* Lista de carros adicionados */
+.BoxCarrosList {
+    width: calc(22% - 30px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    padding: 35px;
+    border: solid 2px black;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.397);
+}
+
+.TitleCarrosList {
+    text-align: center;
+    font-size: 28px;
+}
+
+.ConteudoCarrosList {
+    margin: 6px 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.ButtonsAlignCarrosList {
+    display: flex;
+    justify-content: center;
+}
+
+.ButtonsAlignCarrosList button {
+    cursor: pointer;
+    font-family: "Lalezar", serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 12px 10px 0px 10px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+
+.DetalhesCarrosList {
+    background-color: #2300BD;
+}
+
+.EditarCarrosList {
+    background-color: #3B0FFF;
+}
