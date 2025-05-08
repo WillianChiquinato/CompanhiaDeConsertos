@@ -31,8 +31,8 @@ function CarrosItem({ title, image, type, owner, value }) {
       <span className="ConteudoCarrosList">Valor total (R$): {value}</span>
 
       <div className="ButtonsAlignCarrosList">
-        <button className="DetalhesCarrosList">Detalhes</button>
-        <button className="EditarCarrosList">Editar</button>
+        <button className="DetalhesCarrosList">Editar</button>
+        <button className="EditarCarrosList">Deletar</button>
       </div>
     </div>
   );

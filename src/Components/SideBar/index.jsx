@@ -70,13 +70,6 @@ export default function SideBar() {
             children="Indicadores"
           />
 
-          <SideBarRepeat
-            propsID="indicadoresHeader"
-            propsHref="indicadores.html"
-            propsImage={indicadores}
-            children="Indicadores"
-          />
-
           <div className="TopicosHeader">
             <a className="containerTopico Efeito" href="">
               <img className="IconTopico" src={sair} alt="" />
