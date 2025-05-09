@@ -11,14 +11,25 @@ import linkedin from "./assets/linkedin.png";
 import instagram from "./assets/instagram.png";
 import github from "./assets/github.png";
 import "./styles.css";
+import { Link, useLocation } from "react-router-dom";
 
-function SideBarRepeat({propsID, propsHref, propsImage, children}) {
+function SideBarRepeat({ propsID, propsHref, propsImage, children }) {
+  const location = useLocation();
+
   return (
     <div className="TopicosHeader">
-      <a className="containerTopico Efeito" id={propsID} href={propsHref}>
+      <Link
+        id={propsID}
+        to={propsHref}
+        className={`
+          containerTopico
+          Efeito
+          ${location.pathname === propsHref ? 'linkDestaque' : ''}
+        `}
+      >
         <img className="IconTopico" src={propsImage} alt="" />
         <span className="textoTopico">{children}</span>
-      </a>
+      </Link>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Carros from "./Components/Carros";
 import Inicio from "./Components/Inicio";
 import SideBar from "./Components/SideBar";
+import Funcionarios from "./Components/Funcionarios";
 // import { useState, useEffect } from "react";
 
 function LayoutPadrao() {
@@ -40,6 +41,7 @@ function App() {
           <Route element={<LayoutPadrao />}>
             <Route path="/" element={<Inicio />} />
             <Route path="/carros" element={<Carros />} />
+            <Route path="/funcionarios" element={<Funcionarios />} />
           </Route>
         </Routes>
       </BrowserRouter>
