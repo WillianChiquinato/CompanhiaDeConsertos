@@ -37,35 +37,35 @@ export default function SideBar() {
 
           <SideBarRepeat
             propsID="inicioHeader"
-            propsHref="index.html"
+            propsHref="/"
             propsImage={home}
             children="Início"
           />
 
           <SideBarRepeat
             propsID="carrosHeader"
-            propsHref="carros.html"
+            propsHref="/carros"
             propsImage={carros}
             children="Carros"
           />
 
           <SideBarRepeat
             propsID="funcionariosHeader"
-            propsHref="funcionarios.html"
+            propsHref="/funcionarios"
             propsImage={funcionarios}
             children="Funcionários"
           />
 
           <SideBarRepeat
             propsID="despesasHeader"
-            propsHref="despesas.html"
+            propsHref="/despesas"
             propsImage={formulario}
             children="Despesas"
           />
 
           <SideBarRepeat
             propsID="indicadoresHeader"
-            propsHref="indicadores.html"
+            propsHref="/indicadores"
             propsImage={indicadores}
             children="Indicadores"
           />

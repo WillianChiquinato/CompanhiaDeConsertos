@@ -1,12 +1,12 @@
 #fade,
-#modal {
+#modalExtrair {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.6s ease;
 }
 
 #fade.show,
-#modal.show {
+#modalExtrair.show {
     opacity: 1;
     pointer-events: all;
 }
@@ -75,7 +75,7 @@
     z-index: 11;
 }
 
-#modal {
+#modalExtrair {
     background-color: rgb(201, 201, 201);
     width: 700px;
     height: 450px;

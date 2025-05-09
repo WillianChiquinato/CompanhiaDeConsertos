@@ -3,7 +3,8 @@ import carroImageParticular from "./assets/ImagemTeste.png";
 import carroImageSeguradora from "./assets/image.png";
 import Filtro from "./assets/Filtro.png";
 import BotaoForms from "./assets/BotaoForms.png";
-import Modal from '../../Components/Carros/modal/modal';
+import Modal from "../../Components/Carros/modal/modal";
+import ModalConfirma from "../../Components/Carros/modalConfirm/modalConfirma";
 import "./styles.css";
 
 function CarrosTitle({ classContainer, classTitle, title, number }) {
@@ -21,7 +22,7 @@ function CarrosTitle({ classContainer, classTitle, title, number }) {
   );
 }
 
-function CarrosItem({ title, image, type, owner, value }) {
+function CarrosItem({ title, image, type, owner, value, id, openModal }) {
   return (
     <div className="BoxCarrosList">
       <span className="TitleCarrosList">{title}</span>
@@ -32,7 +33,15 @@ function CarrosItem({ title, image, type, owner, value }) {
 
       <div className="ButtonsAlignCarrosList">
         <button className="DetalhesCarrosList">Editar</button>
-        <button className="EditarCarrosList">Deletar</button>
+        <button
+          className="EditarCarrosList"
+          onClick={(e) => {
+            e.preventDefault();
+            openModal(id); // Chama a função openModal ao clicar no botão
+          }}
+        >
+          Deletar
+        </button>
       </div>
     </div>
   );
@@ -60,8 +69,140 @@ function BotaoAddCarros({ image, openModal, closeModal, showModal }) {
 
 export default function Carros() {
   const [showModal, setShowModal] = useState(false);
+  const [carroParaRemover, setCarroParaRemover] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+
+  const [carrosParticulares, setCarrosParticulares] = useState([
+    {
+      id: 1,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageParticular,
+      type: "Particular",
+    },
+    {
+      id: 2,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageParticular,
+      type: "Particular",
+    },
+    {
+      id: 3,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageParticular,
+      type: "Particular",
+    },
+    {
+      id: 4,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageParticular,
+      type: "Particular",
+    },
+    {
+      id: 5,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageParticular,
+      type: "Particular",
+    },
+    {
+      id: 6,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageParticular,
+      type: "Particular",
+    },
+  ]);
+
+  const [carrosSeguradora, setCarrosSeguradora] = useState([
+    {
+      id: 1,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageSeguradora,
+      type: "Particular",
+    },
+    {
+      id: 2,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageSeguradora,
+      type: "Particular",
+    },
+    {
+      id: 3,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageSeguradora,
+      type: "Particular",
+    },
+    {
+      id: 4,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageSeguradora,
+      type: "Particular",
+    },
+    {
+      id: 5,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageSeguradora,
+      type: "Particular",
+    },
+    {
+      id: 6,
+      title: "Gol",
+      owner: "Bruno Alves",
+      value: "3.000,00",
+      image: carroImageSeguradora,
+      type: "Particular",
+    },
+  ]);
+
+  const openDeleteModal = (id, tipo) => {
+  setCarroParaRemover({ id, tipo });
+  setShowDeleteModal(true);
+};
+
+const closeDeleteModal = () => {
+  setShowDeleteModal(false);
+  setCarroParaRemover(null);
+};
+
+const removerCarro = () => {
+  if (!carroParaRemover) return;
+
+  if (carroParaRemover.tipo === "particular") {
+    setCarrosParticulares((prev) =>
+      prev.filter((carro) => carro.id !== carroParaRemover.id)
+    );
+  } else if (carroParaRemover.tipo === "seguradora") {
+    setCarrosSeguradora((prev) =>
+      prev.filter((carro) => carro.id !== carroParaRemover.id)
+    );
+  }
+
+  setShowDeleteModal(false);
+  console.log(`Carro ${carroParaRemover.id} removido da lista ${carroParaRemover.tipo}`);
+};
 
   return (
     <>
@@ -86,69 +227,9 @@ export default function Carros() {
             showModal={showModal}
           />
 
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
-
-          <CarrosItem
-            title="Gol Quadrado"
-            image={carroImageParticular}
-            type="Particular"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
+          {carrosParticulares.map((carro) => (
+            <CarrosItem key={carro.id} {...carro} openModal={() => openDeleteModal(carro.id, "particular")} />
+          ))}
         </div>
 
         {/* Lista carros seguradora */}
@@ -167,15 +248,17 @@ export default function Carros() {
             showModal={showModal}
           />
 
-          <CarrosItem
-            title="Onix 2018"
-            image={carroImageSeguradora}
-            type="Seguradora"
-            owner="Bruno Alves"
-            value="3.000,00"
-          />
+          {carrosSeguradora.map((carro) => (
+            <CarrosItem key={carro.id} {...carro} openModal={() => openDeleteModal(carro.id, "seguradora")} />
+          ))}
         </div>
       </article>
+
+      <ModalConfirma
+        isOpen={showDeleteModal}
+        onClose={closeDeleteModal}
+        onDelete={() => removerCarro(removerCarro)}
+      />
     </>
   );
 }

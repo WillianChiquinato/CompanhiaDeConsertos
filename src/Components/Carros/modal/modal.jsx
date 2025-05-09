@@ -1,5 +1,5 @@
-import { useState } from "react";
 import "./modal.css";
+import { useState } from "react";
 
 export default function ModalCarros({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
@@ -24,13 +24,13 @@ export default function ModalCarros({ isOpen, onClose }) {
     console.log("Dados do formulário:", formData);
     //Limpando o formulário após o envio
     setFormData({
-        dataCriacao: "",
-        nomeVeiculo: "",
-        nomeProprietario: "",
-        imagem: null,
-        valorTotal: "",
-        descricao: "",
-        });
+      dataCriacao: "",
+      nomeVeiculo: "",
+      nomeProprietario: "",
+      imagem: null,
+      valorTotal: "",
+      descricao: "",
+    });
 
     // Aqui você pode enviar para a API, salvar no banco, etc.
   };
@@ -53,7 +53,7 @@ export default function ModalCarros({ isOpen, onClose }) {
         <form onSubmit={handleSubmit}>
           <label>Data Criação</label>
           <input
-            type="text"
+            type="date"
             name="dataCriacao"
             placeholder="XX/XX/XXXX"
             value={formData.dataCriacao}
@@ -101,9 +101,11 @@ export default function ModalCarros({ isOpen, onClose }) {
             onChange={handleChange}
           />
 
-          <button type="submit" className="enviar-button">
-            Enviar
-          </button>
+          <div className="modal-button">
+            <button type="submit" className="enviar-button">
+              Enviar
+            </button>
+          </div>
         </form>
       </div>
     </>

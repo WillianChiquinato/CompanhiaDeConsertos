@@ -4,7 +4,7 @@ export default function ModalExtracao({ isOpen, onClose }) {
     return (
         <>
             <div id="fade" className={`modal-fade ${isOpen ? "show" : ""}`} onClick={onClose} />
-            <div id="modal" className={`modal-container ${isOpen ? "show" : ""}`} >
+            <div id="modalExtrair" className={`modal-container ${isOpen ? "show" : ""}`} >
                 <div className="modal-Header">
                     <h2 id="modal-title">EXTRAÇÃO</h2>
                     <button id="fechar-modal" className="button" onClick={onClose}>Sair</button>

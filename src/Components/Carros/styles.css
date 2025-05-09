@@ -1,4 +1,6 @@
 .Carros {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     margin-left: 25%;
     background-color: #EBEBEB;
@@ -78,14 +80,15 @@
 /* adicao de carros */
 .CarrosList {
     display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
     gap: 100px;
-    height: auto;
     margin: 30px;
 }
 
 .BoxAddCarro {
-    width: calc(22% - 30px);
+    width: 325px;
+    height: 507px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,7 +106,7 @@
 
 /* Lista de carros adicionados */
 .BoxCarrosList {
-    width: calc(22% - 30px);
+    width: 325px;
     display: flex;
     flex-direction: column;
     justify-content: center;
