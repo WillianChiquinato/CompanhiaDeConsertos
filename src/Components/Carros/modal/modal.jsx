@@ -1,8 +1,9 @@
 import "./modal.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ModalCarros({ isOpen, onClose }) {
+export default function ModalCarros({ isOpen, onClose, tipo }) {
   const [formData, setFormData] = useState({
+    tipo: "",
     dataCriacao: "",
     nomeVeiculo: "",
     nomeProprietario: "",
@@ -10,6 +11,13 @@ export default function ModalCarros({ isOpen, onClose }) {
     valorTotal: "",
     descricao: "",
   });
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      tipo: tipo,
+    }));
+  }, [tipo]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -24,6 +32,7 @@ export default function ModalCarros({ isOpen, onClose }) {
     console.log("Dados do formulário:", formData);
     //Limpando o formulário após o envio
     setFormData({
+      tipo: tipo,
       dataCriacao: "",
       nomeVeiculo: "",
       nomeProprietario: "",

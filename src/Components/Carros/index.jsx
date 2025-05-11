@@ -47,7 +47,7 @@ function CarrosItem({ title, image, type, owner, value, id, openModal }) {
   );
 }
 
-function BotaoAddCarros({ image, openModal, closeModal, showModal }) {
+function BotaoAddCarros({ image, openModal, closeModal, showModal, tipo }) {
   return (
     <>
       <div className="BoxAddCarro">
@@ -62,17 +62,21 @@ function BotaoAddCarros({ image, openModal, closeModal, showModal }) {
         </a>
       </div>
 
-      <Modal isOpen={showModal} onClose={closeModal} />
+      <Modal isOpen={showModal} onClose={closeModal} tipo={tipo} />
     </>
   );
 }
 
 export default function Carros() {
   const [showModal, setShowModal] = useState(false);
+  const [tipoModal, setTipoModal] = useState("");
   const [carroParaRemover, setCarroParaRemover] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const openModal = () => setShowModal(true);
+  const openModal = (tipo) => {
+    setTipoModal(tipo);
+    setShowModal(true);
+  };
   const closeModal = () => setShowModal(false);
 
   const [carrosParticulares, setCarrosParticulares] = useState([
@@ -178,31 +182,33 @@ export default function Carros() {
   ]);
 
   const openDeleteModal = (id, tipo) => {
-  setCarroParaRemover({ id, tipo });
-  setShowDeleteModal(true);
-};
+    setCarroParaRemover({ id, tipo });
+    setShowDeleteModal(true);
+  };
 
-const closeDeleteModal = () => {
-  setShowDeleteModal(false);
-  setCarroParaRemover(null);
-};
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setCarroParaRemover(null);
+  };
 
-const removerCarro = () => {
-  if (!carroParaRemover) return;
+  const removerCarro = () => {
+    if (!carroParaRemover) return;
 
-  if (carroParaRemover.tipo === "particular") {
-    setCarrosParticulares((prev) =>
-      prev.filter((carro) => carro.id !== carroParaRemover.id)
+    if (carroParaRemover.tipo === "particular") {
+      setCarrosParticulares((prev) =>
+        prev.filter((carro) => carro.id !== carroParaRemover.id)
+      );
+    } else if (carroParaRemover.tipo === "seguradora") {
+      setCarrosSeguradora((prev) =>
+        prev.filter((carro) => carro.id !== carroParaRemover.id)
+      );
+    }
+
+    setShowDeleteModal(false);
+    console.log(
+      `Carro ${carroParaRemover.id} removido da lista ${carroParaRemover.tipo}`
     );
-  } else if (carroParaRemover.tipo === "seguradora") {
-    setCarrosSeguradora((prev) =>
-      prev.filter((carro) => carro.id !== carroParaRemover.id)
-    );
-  }
-
-  setShowDeleteModal(false);
-  console.log(`Carro ${carroParaRemover.id} removido da lista ${carroParaRemover.tipo}`);
-};
+  };
 
   return (
     <>
@@ -222,13 +228,18 @@ const removerCarro = () => {
         <div className="CarrosList">
           <BotaoAddCarros
             image={BotaoForms}
-            openModal={openModal}
+            openModal={() => openModal("Particular")}
             closeModal={closeModal}
             showModal={showModal}
+            tipo={tipoModal}
           />
 
           {carrosParticulares.map((carro) => (
-            <CarrosItem key={carro.id} {...carro} openModal={() => openDeleteModal(carro.id, "particular")} />
+            <CarrosItem
+              key={carro.id}
+              {...carro}
+              openModal={() => openDeleteModal(carro.id, "particular")}
+            />
           ))}
         </div>
 
@@ -243,13 +254,18 @@ const removerCarro = () => {
         <div className="CarrosList">
           <BotaoAddCarros
             image={BotaoForms}
-            openModal={openModal}
+            openModal={() => openModal("Seguradora")}
             closeModal={closeModal}
             showModal={showModal}
+            tipo={tipoModal}
           />
 
           {carrosSeguradora.map((carro) => (
-            <CarrosItem key={carro.id} {...carro} openModal={() => openDeleteModal(carro.id, "seguradora")} />
+            <CarrosItem
+              key={carro.id}
+              {...carro}
+              openModal={() => openDeleteModal(carro.id, "seguradora")}
+            />
           ))}
         </div>
       </article>

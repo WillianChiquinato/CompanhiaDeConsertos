@@ -4,6 +4,7 @@ import Carros from "./Components/Carros";
 import Inicio from "./Components/Inicio";
 import SideBar from "./Components/SideBar";
 import Funcionarios from "./Components/Funcionarios";
+import Despesas from "./Components/Despesas";
 // import { useState, useEffect } from "react";
 
 function LayoutPadrao() {
@@ -42,7 +43,10 @@ function App() {
             <Route path="/" element={<Inicio />} />
             <Route path="/carros" element={<Carros />} />
             <Route path="/funcionarios" element={<Funcionarios />} />
+            <Route path="/despesas/:id" element={<Despesas />} />
           </Route>
+
+          <Route path="*" element={<div>Pagina nao encontrada</div>}/>
         </Routes>
       </BrowserRouter>
       

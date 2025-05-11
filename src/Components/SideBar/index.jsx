@@ -16,6 +16,11 @@ import { Link, useLocation } from "react-router-dom";
 function SideBarRepeat({ propsID, propsHref, propsImage, children }) {
   const location = useLocation();
 
+  const isDespesas = propsHref.startsWith("/despesas/");
+  const isActive = isDespesas
+    ? location.pathname.startsWith("/despesas/")
+    : location.pathname === propsHref;
+
   return (
     <div className="TopicosHeader">
       <Link
@@ -24,7 +29,7 @@ function SideBarRepeat({ propsID, propsHref, propsImage, children }) {
         className={`
           containerTopico
           Efeito
-          ${location.pathname === propsHref ? 'linkDestaque' : ''}
+          ${isActive ? 'linkDestaque' : ''}
         `}
       >
         <img className="IconTopico" src={propsImage} alt="" />
@@ -69,7 +74,7 @@ export default function SideBar() {
 
           <SideBarRepeat
             propsID="despesasHeader"
-            propsHref="/despesas"
+            propsHref="/despesas/1"
             propsImage={formulario}
             children="Despesas"
           />
