@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import carroImageParticular from "./assets/ImagemTeste.png";
 import carroImageSeguradora from "./assets/image.png";
 import Filtro from "./assets/Filtro.png";
@@ -68,118 +68,68 @@ function BotaoAddCarros({ image, openModal, closeModal, showModal, tipo }) {
 }
 
 export default function Carros() {
+  const [carrosParticulares, setCarrosParticulares] = useState([]);
+  const [carrosSeguradora, setCarrosSeguradora] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [tipoModal, setTipoModal] = useState("");
   const [carroParaRemover, setCarroParaRemover] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  //Segundo paremetro do useEffect é quando o array estiver alguma mudança ele ira renderizar novamente.
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 1. Buscar tipos
+        const tiposResponse = await fetch(
+          "http://localhost:8080/api/tipocarro"
+        );
+        const tiposData = await tiposResponse.json();
+
+        const tiposLookup = {};
+        tiposData.forEach((tipo) => {
+          tiposLookup[tipo.Id_TipoCarro] = tipo.Descricao;
+        });
+
+        // 2. Buscar carros
+        const carrosResponse = await fetch("http://localhost:8080/api/carro");
+        const carrosData = await carrosResponse.json();
+
+        const carrosComTipo = carrosData.map((carro) => ({
+          id: carro.Id_Carro,
+          title: carro.NomeVeiculo,
+          value: carro.ValorTotal,
+          type: tiposLookup[carro.FK_TipoCarro] || "desconhecido",
+          owner: carro.Proprietario,
+          image:
+            tiposLookup[carro.FK_TipoCarro] === "particular"
+              ? carroImageParticular
+              : carroImageSeguradora,
+        }));
+
+        
+        // Separar em particulares e seguradora
+        const particulares = carrosComTipo.filter(
+          (carro) => carro.type === "particular"
+        );
+        const seguradora = carrosComTipo.filter(
+          (carro) => carro.type === "seguradora"
+        );
+
+        setCarrosParticulares(particulares);
+        setCarrosSeguradora(seguradora);
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const openModal = (tipo) => {
     setTipoModal(tipo);
     setShowModal(true);
   };
   const closeModal = () => setShowModal(false);
-
-  const [carrosParticulares, setCarrosParticulares] = useState([
-    {
-      id: 1,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageParticular,
-      type: "Particular",
-    },
-    {
-      id: 2,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageParticular,
-      type: "Particular",
-    },
-    {
-      id: 3,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageParticular,
-      type: "Particular",
-    },
-    {
-      id: 4,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageParticular,
-      type: "Particular",
-    },
-    {
-      id: 5,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageParticular,
-      type: "Particular",
-    },
-    {
-      id: 6,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageParticular,
-      type: "Particular",
-    },
-  ]);
-
-  const [carrosSeguradora, setCarrosSeguradora] = useState([
-    {
-      id: 1,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageSeguradora,
-      type: "Particular",
-    },
-    {
-      id: 2,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageSeguradora,
-      type: "Particular",
-    },
-    {
-      id: 3,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageSeguradora,
-      type: "Particular",
-    },
-    {
-      id: 4,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageSeguradora,
-      type: "Particular",
-    },
-    {
-      id: 5,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageSeguradora,
-      type: "Particular",
-    },
-    {
-      id: 6,
-      title: "Gol",
-      owner: "Bruno Alves",
-      value: "3.000,00",
-      image: carroImageSeguradora,
-      type: "Particular",
-    },
-  ]);
 
   const openDeleteModal = (id, tipo) => {
     setCarroParaRemover({ id, tipo });
@@ -210,6 +160,9 @@ export default function Carros() {
     );
   };
 
+  // console.log("Carros Particulares:", carrosParticulares);
+  // console.log("Carros Seguradora:", carrosSeguradora);
+
   return (
     <>
       <article className="Carros">
@@ -228,7 +181,7 @@ export default function Carros() {
         <div className="CarrosList">
           <BotaoAddCarros
             image={BotaoForms}
-            openModal={() => openModal("Particular")}
+            openModal={() => openModal("particular")}
             closeModal={closeModal}
             showModal={showModal}
             tipo={tipoModal}
@@ -254,7 +207,7 @@ export default function Carros() {
         <div className="CarrosList">
           <BotaoAddCarros
             image={BotaoForms}
-            openModal={() => openModal("Seguradora")}
+            openModal={() => openModal("seguradora")}
             closeModal={closeModal}
             showModal={showModal}
             tipo={tipoModal}

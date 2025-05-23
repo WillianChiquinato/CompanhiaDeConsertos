@@ -5,7 +5,6 @@ import Inicio from "./Components/Inicio";
 import SideBar from "./Components/SideBar";
 import Funcionarios from "./Components/Funcionarios";
 import Despesas from "./Components/Despesas";
-// import { useState, useEffect } from "react";
 
 function LayoutPadrao() {
   return (
@@ -17,23 +16,6 @@ function LayoutPadrao() {
 }
 
 function App() {
-  // const [dados, setDados] = useState([]);
-
-  // Função para buscar os dados da API, no caso dos usuários.
-  // useEffect(() => {
-  //   const fetchUsuarios = async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:8080/api/usuario');
-  //       if (!response.ok) throw new Error('Erro ao buscar dados');
-  //       const data = await response.json();
-  //       setDados(data);
-  //     } catch (error) {
-  //       console.error('Erro ao buscar usuários:', error);
-  //     }
-  //   };
-
-  //   fetchUsuarios();
-  // }, []);
 
   return (
     <div>
