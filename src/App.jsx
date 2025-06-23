@@ -31,16 +31,6 @@ function App() {
           <Route path="*" element={<div>Pagina nao encontrada</div>}/>
         </Routes>
       </BrowserRouter>
-      
-
-      {/* <div>
-        <h1>Usuarios da API</h1>
-        <ul>
-          {dados.map((usuario, index) => (
-            <li key={index}>{usuario.Login}</li>
-          ))}
-        </ul>
-      </div> */}
     </div>
   );
 }

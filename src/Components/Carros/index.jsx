@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import carroImageParticular from "./assets/ImagemTeste.png";
-import carroImageSeguradora from "./assets/image.png";
+import carroImageParticular from "./assets/Particulares.jpg";
+import carroImageSeguradora from "./assets/Seguradoras.jpg";
 import Filtro from "./assets/Filtro.png";
 import BotaoForms from "./assets/BotaoForms.png";
 import Modal from "../../Components/Carros/modal/modal";
 import ModalConfirma from "../../Components/Carros/modalConfirm/modalConfirma";
+import useApiController from "../../services/controller";
 import "./styles.css";
 
 function CarrosTitle({ classContainer, classTitle, title, number }) {
@@ -26,7 +27,7 @@ function CarrosItem({ title, image, type, owner, value, id, openModal }) {
   return (
     <div className="BoxCarrosList">
       <span className="TitleCarrosList">{title}</span>
-      <img src={image} alt={title} />
+      <img src={image} alt={title} height={170}/>
       <span className="ConteudoCarrosList">Tipo: {type}</span>
       <span className="ConteudoCarrosList">Proprietário: {owner}</span>
       <span className="ConteudoCarrosList">Valor total (R$): {value}</span>
@@ -47,7 +48,14 @@ function CarrosItem({ title, image, type, owner, value, id, openModal }) {
   );
 }
 
-function BotaoAddCarros({ image, openModal, closeModal, showModal, tipo }) {
+function BotaoAddCarros({
+  image,
+  openModal,
+  closeModal,
+  showModal,
+  tipo,
+  onCreateCarro,
+}) {
   return (
     <>
       <div className="BoxAddCarro">
@@ -62,7 +70,12 @@ function BotaoAddCarros({ image, openModal, closeModal, showModal, tipo }) {
         </a>
       </div>
 
-      <Modal isOpen={showModal} onClose={closeModal} tipo={tipo} />
+      <Modal
+        isOpen={showModal}
+        onClose={closeModal}
+        tipo={tipo}
+        onCreateCarro={onCreateCarro}
+      />
     </>
   );
 }
@@ -75,55 +88,59 @@ export default function Carros() {
   const [carroParaRemover, setCarroParaRemover] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  //Segundo paremetro do useEffect é quando o array estiver alguma mudança ele ira renderizar novamente.
+  const tipoCarroController = useApiController("tipocarro");
+  const carroController = useApiController("carro");
+
+  const fetchData = async () => {
+    try {
+      // 1. Buscar os Tipos de Carros
+      const tiposData = await tipoCarroController.getAll();
+
+      const tiposLookup = {};
+      tiposData.forEach((tipo) => {
+        tiposLookup[tipo.Id_TipoCarro] = tipo.Descricao;
+      });
+
+      // 2. Buscar os Carros
+      const carrosData = await carroController.getAll();
+
+      const carrosComTipo = carrosData.map((carro) => ({
+        id: carro.Id_Carro,
+        title: carro.NomeVeiculo,
+        value: carro.ValorTotal,
+        type: tiposLookup[carro.FK_TipoCarro] || "desconhecido",
+        owner: carro.Proprietario,
+        image:
+          tiposLookup[carro.FK_TipoCarro] === "particular"
+            ? carroImageParticular
+            : carroImageSeguradora,
+      }));
+
+      // 3. Separar em listas
+      setCarrosParticulares(
+        carrosComTipo.filter((carro) => carro.type === "particular")
+      );
+      setCarrosSeguradora(
+        carrosComTipo.filter((carro) => carro.type === "seguradora")
+      );
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // 1. Buscar tipos
-        const tiposResponse = await fetch(
-          "http://localhost:8080/api/tipocarro"
-        );
-        const tiposData = await tiposResponse.json();
-
-        const tiposLookup = {};
-        tiposData.forEach((tipo) => {
-          tiposLookup[tipo.Id_TipoCarro] = tipo.Descricao;
-        });
-
-        // 2. Buscar carros
-        const carrosResponse = await fetch("http://localhost:8080/api/carro");
-        const carrosData = await carrosResponse.json();
-
-        const carrosComTipo = carrosData.map((carro) => ({
-          id: carro.Id_Carro,
-          title: carro.NomeVeiculo,
-          value: carro.ValorTotal,
-          type: tiposLookup[carro.FK_TipoCarro] || "desconhecido",
-          owner: carro.Proprietario,
-          image:
-            tiposLookup[carro.FK_TipoCarro] === "particular"
-              ? carroImageParticular
-              : carroImageSeguradora,
-        }));
-
-        
-        // Separar em particulares e seguradora
-        const particulares = carrosComTipo.filter(
-          (carro) => carro.type === "particular"
-        );
-        const seguradora = carrosComTipo.filter(
-          (carro) => carro.type === "seguradora"
-        );
-
-        setCarrosParticulares(particulares);
-        setCarrosSeguradora(seguradora);
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-      }
-    };
-
     fetchData();
-  }, []);
+  }, [carroController, tipoCarroController]);
+
+  // Criar um carro
+  const handleCreateCarro = async (novoCarro) => {
+    try {
+      await carroController.create(novoCarro);
+      await fetchData();
+    } catch (error) {
+      console.error("Erro ao criar carro:", error);
+    }
+  };
 
   const openModal = (tipo) => {
     setTipoModal(tipo);
@@ -141,27 +158,21 @@ export default function Carros() {
     setCarroParaRemover(null);
   };
 
-  const removerCarro = () => {
+  const removerCarro = async () => {
     if (!carroParaRemover) return;
 
-    if (carroParaRemover.tipo === "particular") {
-      setCarrosParticulares((prev) =>
-        prev.filter((carro) => carro.id !== carroParaRemover.id)
-      );
-    } else if (carroParaRemover.tipo === "seguradora") {
-      setCarrosSeguradora((prev) =>
-        prev.filter((carro) => carro.id !== carroParaRemover.id)
-      );
+    try {
+      await carroController.deleteRecord(carroParaRemover.id);
+      console.log(`Carro ${carroParaRemover.id} removido com sucesso.`);
+
+      // Atualiza a lista de carros
+      await fetchData();
+    } catch (error) {
+      console.error("Erro ao remover carro:", error);
     }
 
     setShowDeleteModal(false);
-    console.log(
-      `Carro ${carroParaRemover.id} removido da lista ${carroParaRemover.tipo}`
-    );
   };
-
-  // console.log("Carros Particulares:", carrosParticulares);
-  // console.log("Carros Seguradora:", carrosSeguradora);
 
   return (
     <>
@@ -185,6 +196,7 @@ export default function Carros() {
             closeModal={closeModal}
             showModal={showModal}
             tipo={tipoModal}
+            onCreateCarro={handleCreateCarro}
           />
 
           {carrosParticulares.map((carro) => (
@@ -211,6 +223,7 @@ export default function Carros() {
             closeModal={closeModal}
             showModal={showModal}
             tipo={tipoModal}
+            onCreateCarro={handleCreateCarro}
           />
 
           {carrosSeguradora.map((carro) => (

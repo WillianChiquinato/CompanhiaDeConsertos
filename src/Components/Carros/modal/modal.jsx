@@ -1,7 +1,7 @@
 import "./modal.css";
 import { useState, useEffect } from "react";
 
-export default function ModalCarros({ isOpen, onClose, tipo }) {
+export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
   const [formData, setFormData] = useState({
     tipo: "",
     dataCriacao: "",
@@ -27,21 +27,41 @@ export default function ModalCarros({ isOpen, onClose, tipo }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Dados do formulário:", formData);
-    //Limpando o formulário após o envio
-    setFormData({
-      tipo: tipo,
-      dataCriacao: "",
-      nomeVeiculo: "",
-      nomeProprietario: "",
-      imagem: null,
-      valorTotal: "",
-      descricao: "",
-    });
 
-    // Aqui você pode enviar para a API, salvar no banco, etc.
+    const tipoId = tipo === "particular" ? 1 : 2;
+
+    const novoCarro = {
+      NomeVeiculo: formData.nomeVeiculo,
+      ValorTotal: parseFloat(formData.valorTotal),
+      FK_TipoCarro: tipoId,
+      Proprietario: formData.nomeProprietario,
+      Imagem: formData.imagem ? formData.imagem.name : "",
+      Data_Criacao: formData.dataCriacao
+        ? new Date(formData.dataCriacao).toISOString()
+        : null,
+      Descricao: formData.descricao,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    try {
+      await onCreateCarro(novoCarro);
+      onClose();
+      setFormData({
+        tipo: tipo,
+        dataCriacao: "",
+        nomeVeiculo: "",
+        nomeProprietario: "",
+        imagem: null,
+        valorTotal: "",
+        descricao: "",
+      });
+    } catch (error) {
+      console.error("Erro ao criar o carro:", error);
+    }
   };
 
   return (
