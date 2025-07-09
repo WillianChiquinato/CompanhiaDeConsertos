@@ -7,6 +7,7 @@ import Modal from "../../Components/Carros/modal/modal";
 import ModalConfirma from "../../Components/Carros/modalConfirm/modalConfirma";
 import useApiController from "../../services/controller";
 import "./styles.css";
+import ModalEditCarros from "./modalEdit/modalEdit";
 
 function CarrosTitle({ classContainer, classTitle, title, number }) {
   return (
@@ -23,17 +24,25 @@ function CarrosTitle({ classContainer, classTitle, title, number }) {
   );
 }
 
-function CarrosItem({ title, image, type, owner, value, id, openModal }) {
+function CarrosItem({ title, image, type, owner, value, id, openModal, openModalEdit }) {
   return (
     <div className="BoxCarrosList">
       <span className="TitleCarrosList">{title}</span>
-      <img src={image} alt={title} height={170}/>
+      <img src={image} alt={title} height={170} />
       <span className="ConteudoCarrosList">Tipo: {type}</span>
       <span className="ConteudoCarrosList">Proprietário: {owner}</span>
       <span className="ConteudoCarrosList">Valor total (R$): {value}</span>
 
       <div className="ButtonsAlignCarrosList">
-        <button className="DetalhesCarrosList">Editar</button>
+        <button
+          className="DetalhesCarrosList"
+          onClick={(e) => {
+            e.preventDefault();
+            openModalEdit(id); // Chama a função openModal ao clicar no botão
+          }}
+        >
+          Editar
+        </button>
         <button
           className="EditarCarrosList"
           onClick={(e) => {
@@ -87,6 +96,8 @@ export default function Carros() {
   const [tipoModal, setTipoModal] = useState("");
   const [carroParaRemover, setCarroParaRemover] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [carroParaEditar, setCarroParaEditar] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const tipoCarroController = useApiController("tipocarro");
   const carroController = useApiController("carro");
@@ -142,21 +153,18 @@ export default function Carros() {
     }
   };
 
-  const openModal = (tipo) => {
-    setTipoModal(tipo);
-    setShowModal(true);
-  };
-  const closeModal = () => setShowModal(false);
+  // Update um carro
+  const handleUpdateCarro = async (carroAtualizado) => {
+    if (!carroParaEditar) return;
 
-  const openDeleteModal = (id, tipo) => {
-    setCarroParaRemover({ id, tipo });
-    setShowDeleteModal(true);
-  };
-
-  const closeDeleteModal = () => {
-    setShowDeleteModal(false);
-    setCarroParaRemover(null);
-  };
+    try {
+      await carroController.update(carroAtualizado.id, carroAtualizado);
+      console.log(`Carro ${carroParaEditar} atualizado com sucesso.`);
+      await fetchData();
+    } catch (error) {
+      console.error("Erro ao atualizar carro:", error);
+    }
+  }
 
   const removerCarro = async () => {
     if (!carroParaRemover) return;
@@ -173,6 +181,35 @@ export default function Carros() {
 
     setShowDeleteModal(false);
   };
+
+
+  const openModal = (tipo) => {
+    setTipoModal(tipo);
+    setShowModal(true);
+  };
+  const closeModal = () => setShowModal(false);
+
+  const openDeleteModal = (id, tipo) => {
+    setCarroParaRemover({ id, tipo });
+    setShowDeleteModal(true);
+  };
+
+  const openModalEdit = (id) => {
+    const carro = [...carrosParticulares, ...carrosSeguradora].find(c => c.id === id);
+    setCarroParaEditar(carro);
+    setShowEditModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setCarroParaRemover(null);
+  };
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+    setCarroParaEditar(null);
+  };
+
 
   return (
     <>
@@ -204,6 +241,10 @@ export default function Carros() {
               key={carro.id}
               {...carro}
               openModal={() => openDeleteModal(carro.id, "particular")}
+              openModalEdit={(id) => openModalEdit(id)}
+              onUpdateCarro={handleUpdateCarro}
+              closeModal={closeModal}
+              showModal={showModal}
             />
           ))}
         </div>
@@ -231,6 +272,10 @@ export default function Carros() {
               key={carro.id}
               {...carro}
               openModal={() => openDeleteModal(carro.id, "seguradora")}
+              openModalEdit={(id) => openModalEdit(id)}
+              onUpdateCarro={handleUpdateCarro}
+              closeModal={closeModal}
+              showModal={showModal}
             />
           ))}
         </div>
@@ -241,6 +286,15 @@ export default function Carros() {
         onClose={closeDeleteModal}
         onDelete={() => removerCarro(removerCarro)}
       />
+
+      {carroParaEditar && (
+      <ModalEditCarros
+        isOpen={showEditModal}
+        onClose={closeEditModal}
+        tipo={carroParaEditar.type}
+        onUpdateCarro={handleUpdateCarro}
+        carroData={carroParaEditar}
+      />)}
     </>
   );
 }
