@@ -1,12 +1,14 @@
-import ApiService from '../services/service';
+import ApiService from "../services/service";
 
 /**
  * Hook genérico para operações CRUD em uma entidade da API.
  * @param {string} entityName
  */
 const useApiController = (entityName) => {
-  if (!entityName || typeof entityName !== 'string') {
-    throw new Error('entityName deve ser uma string não vazia em useApiController.');
+  if (!entityName || typeof entityName !== "string") {
+    throw new Error(
+      "entityName deve ser uma string não vazia em useApiController."
+    );
   }
 
   const getAll = async () => {
@@ -19,7 +21,8 @@ const useApiController = (entityName) => {
   };
 
   const getOne = async (id) => {
-    if (!id) throw new Error('ID é obrigatório para buscar um registro específico.');
+    if (!id)
+      throw new Error("ID é obrigatório para buscar um registro específico.");
     try {
       return await ApiService.get(`${entityName}/${id}`);
     } catch (error) {
@@ -29,7 +32,8 @@ const useApiController = (entityName) => {
   };
 
   const create = async (data) => {
-    if (!data) throw new Error('Dados são obrigatórios para criar um registro.');
+    if (!data)
+      throw new Error("Dados são obrigatórios para criar um registro.");
     try {
       return await ApiService.post(entityName, data);
     } catch (error) {
@@ -39,19 +43,28 @@ const useApiController = (entityName) => {
   };
 
   const update = async (id, data) => {
-    if (!id) throw new Error('ID é obrigatório para atualizar um registro.');
-    if (!data) throw new Error('Dados são obrigatórios para atualizar um registro.');
+    if (!id) throw new Error("ID é obrigatório para atualizar um registro.");
+
+    if (!data)
+      throw new Error("Dados são obrigatórios para atualizar um registro.");
     try {
       return await ApiService.put(`${entityName}/${id}`, data);
     } catch (error) {
-      console.error(`Erro ao atualizar ${entityName} com ID ${id}:`, error);
+      if (error.response) {
+        console.error(
+          `Erro ao atualizar ${entityName} com ID ${id}:`,
+          error.response.data
+        );
+      } else {
+        console.error(`Erro ao atualizar ${entityName} com ID ${id}:`, error);
+      }
       throw error;
     }
   };
 
   //Funcao do DELETE
   const deleteRecord = async (id) => {
-    if (!id) throw new Error('ID é obrigatório para deletar um registro.');
+    if (!id) throw new Error("ID é obrigatório para deletar um registro.");
     try {
       return await ApiService.delete(`${entityName}/${id}`);
     } catch (error) {

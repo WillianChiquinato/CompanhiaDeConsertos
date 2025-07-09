@@ -24,7 +24,16 @@ function CarrosTitle({ classContainer, classTitle, title, number }) {
   );
 }
 
-function CarrosItem({ title, image, type, owner, value, id, openModal, openModalEdit }) {
+function CarrosItem({
+  title,
+  image,
+  type,
+  owner,
+  value,
+  id,
+  openModal,
+  openModalEdit,
+}) {
   return (
     <div className="BoxCarrosList">
       <span className="TitleCarrosList">{title}</span>
@@ -125,6 +134,10 @@ export default function Carros() {
           tiposLookup[carro.FK_TipoCarro] === "particular"
             ? carroImageParticular
             : carroImageSeguradora,
+
+        Descricao: carro.Descricao,
+        Data_Criacao: carro.Data_Criacao,
+        createdAt: carro.createdAt,
       }));
 
       // 3. Separar em listas
@@ -158,13 +171,13 @@ export default function Carros() {
     if (!carroParaEditar) return;
 
     try {
-      await carroController.update(carroAtualizado.id, carroAtualizado);
+      await carroController.update(carroAtualizado.Id_Carro, carroAtualizado);
       console.log(`Carro ${carroParaEditar} atualizado com sucesso.`);
       await fetchData();
     } catch (error) {
       console.error("Erro ao atualizar carro:", error);
     }
-  }
+  };
 
   const removerCarro = async () => {
     if (!carroParaRemover) return;
@@ -182,7 +195,6 @@ export default function Carros() {
     setShowDeleteModal(false);
   };
 
-
   const openModal = (tipo) => {
     setTipoModal(tipo);
     setShowModal(true);
@@ -195,7 +207,9 @@ export default function Carros() {
   };
 
   const openModalEdit = (id) => {
-    const carro = [...carrosParticulares, ...carrosSeguradora].find(c => c.id === id);
+    const carro = [...carrosParticulares, ...carrosSeguradora].find(
+      (c) => c.id === id
+    );
     setCarroParaEditar(carro);
     setShowEditModal(true);
   };
@@ -209,7 +223,6 @@ export default function Carros() {
     setShowEditModal(false);
     setCarroParaEditar(null);
   };
-
 
   return (
     <>
@@ -288,13 +301,14 @@ export default function Carros() {
       />
 
       {carroParaEditar && (
-      <ModalEditCarros
-        isOpen={showEditModal}
-        onClose={closeEditModal}
-        tipo={carroParaEditar.type}
-        onUpdateCarro={handleUpdateCarro}
-        carroData={carroParaEditar}
-      />)}
+        <ModalEditCarros
+          isOpen={showEditModal}
+          onClose={closeEditModal}
+          tipo={carroParaEditar.type}
+          onUpdateCarro={handleUpdateCarro}
+          carroData={carroParaEditar}
+        />
+      )}
     </>
   );
 }

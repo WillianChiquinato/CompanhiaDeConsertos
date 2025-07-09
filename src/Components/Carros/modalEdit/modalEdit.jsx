@@ -14,6 +14,18 @@ export default function ModalEditCarros({
   carroData,
 }) {
   const [formData, setFormData] = useState(carroData);
+  const [visible, setVisible] = useState(false);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setVisible(true);
+      setTimeout(() => setAnimate(true), 10);
+    } else {
+      setAnimate(false);
+      setTimeout(() => setVisible(false), 400);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (carroData) {
@@ -25,8 +37,6 @@ export default function ModalEditCarros({
       });
     }
   }, [carroData]);
-
-  if (!isOpen || !carroData) return null;
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -45,7 +55,7 @@ export default function ModalEditCarros({
       Id_Carro: formData.id,
       NomeVeiculo: formData.NomeVeiculo || formData.title,
       Data_Criacao: formData.Data_Criacao,
-      Imagem: formData.image || formData.Imagem || "",
+      Imagem: "Golf.jpg", // Placeholder, adjust as needed
       ValorTotal: parseFloat(String(formData.ValorTotal).replace(",", ".")),
       Descricao: formData.Descricao,
       FK_TipoCarro: tipoId,
@@ -70,17 +80,19 @@ export default function ModalEditCarros({
     }
   };
 
+  if (!visible) return null;
+
   return (
     <>
       <div
         id="fade"
-        className={`modal-fade ${isOpen ? "show" : ""}`}
+        className={`modal-fade ${animate ? "show" : ""}`}
         onClick={onClose}
       />
 
       <div
         id="modalEdit"
-        className={`modal-container-edit ${isOpen ? "show" : ""}`}
+        className={`modal-container-edit ${animate ? "show" : ""}`}
       >
         <div className="modal-Header-edit">
           <h2 id="modal-title-edit">{formData.title}</h2>
@@ -155,10 +167,15 @@ export default function ModalEditCarros({
           </div>
 
           <div className="modal-button-edit">
-            <button type="submit" className="enviar-button-edit">
+            <button
+              id="fechar-modal"
+              type="submit"
+              className="enviar-button-edit"
+            >
               Atualizar
             </button>
             <button
+              id="fechar-modal"
               type="button"
               className="enviar-button-close"
               onClick={onClose}
