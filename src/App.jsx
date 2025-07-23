@@ -6,6 +6,15 @@ import SideBar from "./Components/SideBar";
 import Funcionarios from "./Components/Funcionarios";
 import Despesas from "./Components/Despesas";
 
+export function FormatadorMoeda({ valor }) {
+  const formatado = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(valor);
+
+  return <span>{formatado}</span>;
+}
+
 function LayoutPadrao() {
   return (
     <div className="container">

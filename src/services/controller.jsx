@@ -20,6 +20,25 @@ const useApiController = (entityName) => {
     }
   };
 
+  const getAllGroupedByFuncionario = async () => {
+    try {
+      const adicionais = await ApiService.get(entityName);
+
+      // Agrupar por FK_Funcionario
+      const agrupados = adicionais.reduce((acc, adicional) => {
+        const fk = adicional.FK_Funcionario;
+        if (!acc[fk]) acc[fk] = [];
+        acc[fk].push(adicional.Nome);
+        return acc;
+      }, {});
+
+      return agrupados;
+    } catch (error) {
+      console.error(`Erro ao buscar e agrupar ${entityName}:`, error);
+      throw error;
+    }
+  };
+
   const getOne = async (id) => {
     if (!id)
       throw new Error("ID é obrigatório para buscar um registro específico.");
@@ -75,6 +94,7 @@ const useApiController = (entityName) => {
 
   return {
     getAll,
+    getAllGroupedByFuncionario,
     getOne,
     create,
     update,
