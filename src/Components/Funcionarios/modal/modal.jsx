@@ -5,15 +5,20 @@ export default function ModalFuncionarios({
   isOpen,
   onClose,
   onCreateFuncionario,
+  adicionaisController,
 }) {
   const [formData, setFormData] = useState({
     id: "",
     nome: "",
+    cpf: "",
     cep: "",
     salario: "",
     imagem: null,
     //Adicionais é uma lista
     adicionais: [],
+    valorAdicional: "",
+    adicionalSelecionado: "",
+    descricao: "",
   });
 
   useEffect(() => {
@@ -27,7 +32,12 @@ export default function ModalFuncionarios({
 
     let newValue = value;
 
-    if (name === "cpf" || name === "cep" || name === "salario" || name === "valorAdicional") {
+    if (
+      name === "cpf" ||
+      name === "cep" ||
+      name === "salario" ||
+      name === "valorAdicional"
+    ) {
       newValue = value.replace(/\D/g, ""); // remove tudo que não é número
     }
 
@@ -39,51 +49,70 @@ export default function ModalFuncionarios({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Dados do formulário:", formData);
 
     const novoFuncionario = {
-      NomeFuncionario: formData.nome,
-      SalarioFuncionario: parseFloat(formData.salario),
+      Id_Funcionario: formData.cpf,
+      Nome: formData.nome,
+      Salario: parseFloat(formData.salario),
       Imagem: formData.imagem ? formData.imagem.name : "",
+      Descricao: formData.descricao,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
+    console.log("Enviando funcionário:", novoFuncionario);
+    
     try {
-      await onCreateFuncionario(novoFuncionario);
+      // Cria o funcionário e obtém o ID
+      const funcionarioCriado = await onCreateFuncionario(novoFuncionario);
+      const idFuncionario =
+        funcionarioCriado?.Id_Funcionario || funcionarioCriado?.id;
+
+      // Cria os adicionais relacionados
+      if (formData.adicionais.length > 0 && idFuncionario) {
+        for (const adicional of formData.adicionais) {
+          await adicionaisController.create({
+            Nome: adicional.nome,
+            Valor: adicional.valor,
+            FK_Funcionario: idFuncionario,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          });
+        }
+      }
+
       onClose();
       setFormData({
         id: "",
         nome: "",
+        cpf: "",
         cep: "",
         salario: "",
         imagem: null,
-        //Adicionais é uma lista
         adicionais: [],
+        valorAdicional: "",
+        adicionalSelecionado: "",
+        descricao: "",
       });
     } catch (error) {
-      console.error("Erro ao criar o funcionário:", error);
+      console.error("Erro ao criar funcionário e adicionais:", error);
     }
   };
 
   const handleAddAdicional = () => {
-    const adicionalSelect = document.querySelector("#adicionais");
-    const valorAdicionalInput = document.querySelector(
-      "input[name='valorAdicional']"
-    );
+    const nome = formData.adicionalSelecionado;
+    const valor = parseFloat(formData.valorAdicional) || 0;
 
-    const novoAdicional = {
-      nome: adicionalSelect.value,
-      valor: parseFloat(valorAdicionalInput.value) || 0,
-    };
+    if (!nome || valor <= 0) return;
+
+    const novoAdicional = { nome, valor };
 
     setFormData((prev) => ({
       ...prev,
       adicionais: [...prev.adicionais, novoAdicional],
+      valorAdicional: "",
+      adicionalSelecionado: "",
     }));
-
-    adicionalSelect.value = "";
-    valorAdicionalInput.value = "";
   };
 
   return (
@@ -147,7 +176,12 @@ export default function ModalFuncionarios({
           <div className="AdicionaisContainer">
             <div className="AdicionaisContent">
               <label>Adicionais</label>
-              <select name="adicionais" id="adicionais">
+              <select
+                name="adicionalSelecionado"
+                id="adicionais"
+                value={formData.adicionalSelecionado}
+                onChange={handleChange}
+              >
                 <option value="">Selecione um adicional</option>
                 <option value="Convênio Medico">Convênio Medico</option>
                 <option value="Vale PIX">Vale PIX</option>
@@ -180,13 +214,19 @@ export default function ModalFuncionarios({
           </div>
 
           <label>Lista de Adicionais</label>
-          <ul className="adicionais-list">
+          <ul
+            className={`adicionais-list ${
+              formData.adicionais.length > 0 ? "" : "com-padding"
+            }`}
+          >
             {formData.adicionais.map((adicional, index) => (
-              <li key={index}>{adicional}</li>
+              <li key={index}>
+                {adicional.nome} - R$ {adicional.valor.toFixed(2)}
+              </li>
             ))}
           </ul>
 
-          <label>Descrição</label>
+          <label>Descrição (Atuação)</label>
           <textarea
             name="descricao"
             placeholder="Digite o resumo da obra..."

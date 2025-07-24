@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import FormatadorMoeda from '../Utilitario/util'; 
+import FormatadorMoeda from "../Utilitario/util";
 import funcionarioPadrao from "../Funcionarios/assets/FuncionarioPadrao.png";
 import Filtro from "./assets/Filtro.png";
 import BotaoForms from "./assets/BotaoForms.png";
@@ -22,7 +22,9 @@ function FuncionarioItem({
     <div className="BoxFuncionariosList">
       <span className="TitleFuncionariosList">{title}</span>
       <img src={funcionarioPadrao} alt={image} height={200} />
-      <span className="ConteudoFuncionariosList">Salário: <FormatadorMoeda valor={salary} /></span>
+      <span className="ConteudoFuncionariosList">
+        Salário: <FormatadorMoeda valor={salary} />
+      </span>
       <span className="ConteudoFuncionariosList">
         Adicionais Contagem: {adicionaisLista}
       </span>
@@ -57,6 +59,7 @@ function BotaoAddFuncionario({
   closeModal,
   showModal,
   onCreateFuncionario,
+  adicionaisController,
 }) {
   return (
     <>
@@ -76,6 +79,7 @@ function BotaoAddFuncionario({
         isOpen={showModal}
         onClose={closeModal}
         onCreateFuncionario={onCreateFuncionario}
+        adicionaisController={adicionaisController}
       />
     </>
   );
@@ -121,13 +125,15 @@ export default function Funcionarios() {
     fetchData();
   }, [FuncionarioController, adicionaisFuncionarioController]);
 
-  // Criar um carro
+  // Criar um funcionario
   const handleCreateFuncionario = async (novoFunci) => {
     try {
-      await FuncionarioController.create(novoFunci);
+      const funcionarioCriado = await FuncionarioController.create(novoFunci);
       await fetchData();
+      return funcionarioCriado;
     } catch (error) {
       console.error("Erro ao criar funcionario:", error);
+      throw error;
     }
   };
 
@@ -209,7 +215,8 @@ export default function Funcionarios() {
             openModal={() => openModal()}
             closeModal={closeModal}
             showModal={showModal}
-            onCreateCarro={handleCreateFuncionario}
+            onCreateFuncionario={handleCreateFuncionario}
+            adicionaisController={adicionaisFuncionarioController}
           />
 
           {funcionarios.map((funcionario) => (
