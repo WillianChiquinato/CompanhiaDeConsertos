@@ -6,8 +6,8 @@ import BotaoForms from "./assets/BotaoForms.png";
 import Modal from "../Funcionarios/modal/modal";
 import ModalConfirma from "../Funcionarios/modalConfirmFunc/modalConfirma";
 import useApiController from "../../services/controller";
+import ModalEditFuncionario from "./modalEditFunc/modalEdit";
 import "./styles.css";
-// import ModalEditCarros from "./modalEditFunc/modalEdit";
 
 function FuncionarioItem({
   title,
@@ -37,7 +37,7 @@ function FuncionarioItem({
             openModalEdit(id); // Chama a função openModal ao clicar no botão
           }}
         >
-          Editar
+          Editar/Detalhes
         </button>
         <button
           className="EditarFuncionariosList"
@@ -91,7 +91,8 @@ export default function Funcionarios() {
   const [funcionarioParaRemover, setFuncionarioParaRemover] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [funcionarioParaEditar, setFuncionarioParaEditar] = useState(null);
-  // const [showEditModal, setShowEditModal] = useState(false);
+  const [adicionaisParaEditar, setAdicionaisParaEditar] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const adicionaisFuncionarioController = useApiController(
     "adicionaisfuncionario"
@@ -103,6 +104,7 @@ export default function Funcionarios() {
       // 1. Buscar os Adicionais por Funcionário
       const adicionaisPorFuncionario =
         await adicionaisFuncionarioController.getAllGroupedByFuncionario();
+        
 
       // 2. Buscar os Funcionarios
       const funcionariosData = await FuncionarioController.getAll();
@@ -139,7 +141,7 @@ export default function Funcionarios() {
 
   // Update um funcionario
   const handleUpdateFuncionario = async (funcionarioAtualizado) => {
-    if (!funcionarioParaEditar) return;
+    if (!funcionarioParaEditar && !adicionaisParaEditar) return;
 
     try {
       await FuncionarioController.update(
@@ -147,7 +149,8 @@ export default function Funcionarios() {
         funcionarioAtualizado
       );
       console.log(
-        `Funcionario ${funcionarioParaEditar} atualizado com sucesso.`
+        `Funcionario ${funcionarioParaEditar} atualizado com sucesso.` +
+        `Adicionais atualizados: ${JSON.stringify(adicionaisParaEditar, null, 2)}`
       );
       await fetchData();
     } catch (error) {
@@ -184,9 +187,11 @@ export default function Funcionarios() {
   };
 
   const openModalEdit = (id) => {
-    const funcionario = funcionarios.find((f) => f.id === id);
+    const funcionario = funcionarios.find((f) => f.Id_Funcionario === id);
     setFuncionarioParaEditar(funcionario);
-    // setShowEditModal(true);
+    setAdicionaisParaEditar(funcionario.adicionaisLista);
+    setShowEditModal(true);
+    console.log(`Abrindo modal de edição para o funcionário: ${id}`);
   };
 
   const closeDeleteModal = () => {
@@ -194,10 +199,11 @@ export default function Funcionarios() {
     setFuncionarioParaRemover(null);
   };
 
-  // const closeEditModal = () => {
-  //   setShowEditModal(false);
-  //   setFuncionarioParaEditar(null);
-  // };
+  const closeEditModal = () => {
+    setShowEditModal(false);
+    setFuncionarioParaEditar(null);
+    setAdicionaisParaEditar(null);
+  };
 
   return (
     <>
@@ -242,6 +248,17 @@ export default function Funcionarios() {
         onClose={closeDeleteModal}
         onDelete={() => removerFuncionario(removerFuncionario)}
       />
+
+      {(funcionarioParaEditar || adicionaisParaEditar) && (
+        <ModalEditFuncionario
+          isOpen={showEditModal}
+          onClose={closeEditModal}
+          onUpdateFuncionario={handleUpdateFuncionario}
+          funcionarioData={funcionarioParaEditar}
+          adicionaisData={adicionaisParaEditar}
+          adicionaisController={adicionaisFuncionarioController}
+        />
+      )}
     </>
   );
 }

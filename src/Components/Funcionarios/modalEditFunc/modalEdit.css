@@ -85,10 +85,10 @@
     padding: 10px;
     margin-top: -15px;
     margin-bottom: 10px;
-    border: 1px solid #424242;
     border-radius: 5px;
     letter-spacing: 1px;
     font-size: 21px;
+    border: 1px solid #424242;
     box-shadow: 0px 4px 6px rgba(54, 54, 54, 0.514);
 }
 
@@ -207,7 +207,7 @@
 {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 25px;
 }
 
 .spaceIcon-edit img {
@@ -217,9 +217,85 @@
     flex-shrink: 0;
 }
 
+.spaceIcon-input-edit {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .spaceIcon-input-edit textarea,
-.spaceIcon-input-edit input
+.spaceIcon-input-edit input,
+.spaceIcon-input-edit select
 {
     width: 100%;
     margin-top: 0px;
 }
+
+.list-Adicionais-edit {
+    background-color: rgb(255, 255, 255);
+    border-radius: 6px;
+    margin-top: 0.4rem;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: 1px solid #424242;
+    box-shadow: 0px 4px 6px rgba(54, 54, 54, 0.514);
+}
+
+.EditContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.editContentColumn {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ButtonsEditAdicional {
+    display: flex;
+    justify-content: center;
+}
+
+.buttonAdicionalEdit {
+  background-color: #63ff63;
+  padding: 10px 30px;   
+  color: rgb(0, 0, 0);
+  border: solid 1px #000000;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(54, 54, 54, 0.514);
+  cursor: pointer;
+  opacity: 0.9;
+  font-size: 25px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.buttonAdicionalEdit:hover {
+  background-color: #005a31;
+  color: rgb(255, 255, 255);
+  scale: 1.1;
+}
+
+.list-item-edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.list-item-edit img {
+    display: flex;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.list-item-edit img:hover {
+    scale: 1.2;
+}
+

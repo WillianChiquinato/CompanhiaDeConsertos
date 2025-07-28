@@ -28,7 +28,8 @@ const useApiController = (entityName) => {
       const agrupados = adicionais.reduce((acc, adicional) => {
         const fk = adicional.FK_Funcionario;
         if (!acc[fk]) acc[fk] = [];
-        acc[fk].push(adicional.Nome);
+
+        acc[fk].push(adicional);
         return acc;
       }, {});
 

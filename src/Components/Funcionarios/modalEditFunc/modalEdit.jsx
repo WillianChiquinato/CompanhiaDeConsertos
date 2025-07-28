@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react";
-import carroImageParticular from "../assets/Particulares.jpg";
-import carroImageSeguradora from "../assets/Seguradoras.jpg";
-import DescricaoIcon from "../assets/possessory.png";
-import ProprietarioIcon from "../assets/customer-service.png";
-import ValorTotalIcon from "../assets/money.png";
+import FormatadorMoeda from "../../Utilitario/util";
+import FuncionarioPadrao from "../assets/FuncionarioPadrao.png";
+import NomeIcon from "../assets/NomeIcon.png";
+import DescricaoIcon from "../assets/Descricao.png";
+import CpfIcon from "../assets/CpfIcon.png";
+import CepIcon from "../assets/CepIcon.png";
+import SalarioIcon from "../assets/Salario.png";
+import ListaAddIcon from "../assets/Lista.png";
+import RemoveIcon from "../assets/Lixeira.png";
+import ModalFuncionarios from "../index";
 import "./modalEdit.css";
 
-export default function ModalEditCarros({
+export default function ModalEditFuncionarios({
   isOpen,
   onClose,
-  tipo,
-  onUpdateCarro,
-  carroData,
+  onUpdateFuncionario,
+  funcionarioData,
+  adicionaisData,
+  adicionaisController,
 }) {
-  const [formData, setFormData] = useState(carroData);
+  const [formData, setFormData] = useState(funcionarioData);
   const [visible, setVisible] = useState(false);
   const [animate, setAnimate] = useState(false);
 
@@ -28,15 +34,13 @@ export default function ModalEditCarros({
   }, [isOpen]);
 
   useEffect(() => {
-    if (carroData) {
+    if (funcionarioData) {
       setFormData({
-        ...carroData,
-        Descricao: carroData.Descricao ?? carroData.title ?? "",
-        Proprietario: carroData.Proprietario ?? carroData.owner ?? "",
-        ValorTotal: carroData.ValorTotal ?? carroData.value ?? "",
+        ...funcionarioData,
+        Adicionais: adicionaisData || [],
       });
     }
-  }, [carroData]);
+  }, [funcionarioData]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -46,30 +50,68 @@ export default function ModalEditCarros({
     }));
   };
 
+  const handleAddAdicional = () => {
+    const nome = formData.adicionalSelecionado;
+    const valor = parseFloat(formData.valorAdicional);
+
+    if (!nome || isNaN(valor) || valor <= 0) return;
+
+    const novoAdicional = { nome, valor };
+    console.log("Adicional adicionado: ", novoAdicional);
+
+    setFormData((prev) => ({
+      ...prev,
+      adicionais: [...(prev.adicionais || []), novoAdicional],
+      valorAdicional: "",
+      adicionalSelecionado: "",
+    }));
+  };
+
+  const handleRemoveAdicional = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      Adicionais: prev.Adicionais.filter((_, i) => i !== index),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const tipoId = tipo === "particular" ? 1 : 2;
-
-    const carroAtualizado = {
-      Id_Carro: formData.id,
-      NomeVeiculo: formData.NomeVeiculo || formData.title,
-      Data_Criacao: formData.Data_Criacao,
-      Imagem: "Golf.jpg", // Placeholder, adjust as needed
-      ValorTotal: parseFloat(String(formData.ValorTotal).replace(",", ".")),
+    const funcionarioAtualizado = {
+      Id_Funcionario: formData.Id_Funcionario,
+      Nome: formData.Nome || formData.title,
+      Salario: formData.Salario || formData.value,
+      Imagem: "funcionarioPadrao.png", // Placeholder, adjust as needed
       Descricao: formData.Descricao,
-      FK_TipoCarro: tipoId,
       createdAt: formData.createdAt,
       updatedAt: new Date().toISOString(),
-      Proprietario: formData.Proprietario || formData.owner || "",
     };
 
     try {
-      console.log("carroAtualizado:", carroAtualizado);
-      await onUpdateCarro(carroAtualizado);
+      console.log("funcionario Atualizado:", funcionarioAtualizado);
+      await onUpdateFuncionario(funcionarioAtualizado);
+
+      console.log("Funcionário atualizado com sucesso: ", formData.adicionais);
+
+      if (
+        formData.adicionais.length > 0 &&
+        funcionarioAtualizado.Id_Funcionario
+      ) {
+        for (const adicional of formData.adicionais) {
+          if (!adicional.Id_AdicionaisFuncionario) {
+            await adicionaisController.create({
+              Nome: adicional.nome || adicional.Nome,
+              Valor: adicional.valor || adicional.Valor,
+              FK_Funcionario: funcionarioAtualizado.Id_Funcionario,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            });
+          }
+        }
+      }
       onClose();
     } catch (error) {
-      console.error("Erro ao atualizar o carro:", error);
+      console.error("Erro ao atualizar o funcionario:", error);
 
       if (error.response) {
         console.error("Resposta da API:", error.response.data);
@@ -95,73 +137,140 @@ export default function ModalEditCarros({
         className={`modal-container-edit ${animate ? "show" : ""}`}
       >
         <div className="modal-Header-edit">
-          <h2 id="modal-title-edit">{formData.title}</h2>
+          <h2 id="modal-title-edit">{formData.Nome}</h2>
         </div>
 
         <div className="modal-image-edit">
-          <img
-            src={
-              formData.type === "particular"
-                ? carroImageParticular
-                : carroImageSeguradora
-            }
-            alt={formData.title}
-          />
+          <img src={FuncionarioPadrao} alt={formData.Nome} />
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="checkbox-edit">
-            <input
-              type="checkbox"
-              name="Retrabalhado"
-              checked={formData.Retrabalhado || false}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  Retrabalhado: e.target.checked,
-                }))
-              }
-            />
-            <label>Retrabalhado</label>
+          <div className="spaceIcon-edit">
+            <img src={NomeIcon} alt="Icon" />
+            <div className="spaceIcon-input-edit">
+              <label>Nome do Funcionário</label>
+              <input
+                type="text"
+                name="Nome"
+                value={formData.Nome || ""}
+                onChange={handleChange}
+              />
+            </div>
           </div>
+
+          <div className="spaceIcon-edit">
+            <img src={CpfIcon} alt="Icon" />
+            <div className="spaceIcon-input-edit">
+              <label>CPF (Apenas Exibição):</label>
+              <input
+                type="text"
+                name="Cpf"
+                value={formData.Id_Funcionario || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="spaceIcon-edit">
+            <img src={CepIcon} alt="Icon" />
+            <div className="spaceIcon-input-edit">
+              <label>CEP:</label>
+              <input
+                type="text"
+                name="Cep"
+                value={formData.Cep || "09390-530"}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="spaceIcon-edit">
+            <img src={SalarioIcon} alt="Icon" />
+            <div className="spaceIcon-input-edit">
+              <label>Salário (R$):</label>
+              <input
+                type="number"
+                name="Salario"
+                value={formData.Salario || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <br />
+
+          <div className="spaceIcon-edit">
+            <img src={ListaAddIcon} alt="Icon" />
+            <div className="EditContent">
+              <div className="spaceIcon-input-edit">
+                <div className="editContentColumn">
+                  <div className="AdicionaisContentEdit">
+                    <label>Novo Adicional:</label>
+                    <select
+                      name="adicionalSelecionado"
+                      id="adicionais"
+                      value={formData.adicionalSelecionado}
+                      onChange={handleChange}
+                    >
+                      <option value="">Selecione um adicional</option>
+                      <option value="Convênio Medico">Convênio Medico</option>
+                      <option value="Vale PIX">Vale PIX</option>
+                      <option value="Bonificação">Bonificação</option>
+                      <option value="Odontologico">Odontologico</option>
+                      <option value="Vale Alimentação">Vale Alimentação</option>
+                    </select>
+                  </div>
+
+                  <div className="AdicionaisContentEdit">
+                    <label>Valor Adicional</label>
+                    <input
+                      type="number"
+                      name="valorAdicional"
+                      placeholder="Digite o valor do adicional..."
+                      value={formData.valorAdicional}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="ButtonsEditAdicional">
+                <button
+                  type="button"
+                  className="buttonAdicionalEdit"
+                  onClick={handleAddAdicional}
+                >
+                  Adicionar
+                </button>
+              </div>
+
+              <div className="spaceIcon-input-edit">
+                <label>Lista Adicionais ({formData.Adicionais.length}):</label>
+                <ol className="list-Adicionais-edit">
+                  {formData.Adicionais.map((item, index) => (
+                    <li key={index} className="list-item-edit">
+                      {item.Nome} - <FormatadorMoeda valor={item.Valor} />
+                      <a href="#" onClick={() => handleRemoveAdicional(index)}>
+                        <img src={RemoveIcon} alt="Remover" />
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+          <br />
 
           <div className="spaceIcon-edit">
             <img src={DescricaoIcon} alt="Icon" />
             <div className="spaceIcon-input-edit">
-              <label>Descrição / Reparo:</label>
+              <label>Descrição / Atuação:</label>
               <textarea
                 className="input-text-edit"
                 name="Descricao"
                 placeholder="..."
                 value={formData.Descricao || ""}
                 onChange={handleChange}
-                rows={5}
-              />
-            </div>
-          </div>
-
-          <div className="spaceIcon-edit">
-            <img src={ProprietarioIcon} alt="Icon" />
-            <div className="spaceIcon-input-edit">
-              <label>Proprietário do Veículo</label>
-              <input
-                type="text"
-                name="Proprietario"
-                value={formData.Proprietario || ""}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="spaceIcon-edit">
-            <img src={ValorTotalIcon} alt="Icon" />
-            <div className="spaceIcon-input-edit">
-              <label>Valor Total (R$):</label>
-              <input
-                type="number"
-                name="ValorTotal"
-                value={formData.ValorTotal || ""}
-                onChange={handleChange}
+                rows={3}
               />
             </div>
           </div>
