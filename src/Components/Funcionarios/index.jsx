@@ -148,10 +148,6 @@ export default function Funcionarios() {
         funcionarioAtualizado.Id_Funcionario,
         funcionarioAtualizado
       );
-      console.log(
-        `Funcionario ${funcionarioParaEditar} atualizado com sucesso.` +
-        `Adicionais atualizados: ${JSON.stringify(adicionaisParaEditar, null, 2)}`
-      );
       await fetchData();
     } catch (error) {
       console.error("Erro ao atualizar funcionario:", error);

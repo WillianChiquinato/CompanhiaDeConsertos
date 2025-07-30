@@ -57,21 +57,34 @@ export default function ModalEditFuncionarios({
     if (!nome || isNaN(valor) || valor <= 0) return;
 
     const novoAdicional = { nome, valor };
-    console.log("Adicional adicionado: ", novoAdicional);
+    console.log("Novo adicional:", novoAdicional);
 
     setFormData((prev) => ({
       ...prev,
-      adicionais: [...(prev.adicionais || []), novoAdicional],
+      Adicionais: [...(prev.Adicionais || []), novoAdicional],
       valorAdicional: "",
       adicionalSelecionado: "",
     }));
   };
 
-  const handleRemoveAdicional = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      Adicionais: prev.Adicionais.filter((_, i) => i !== index),
-    }));
+  const handleRemoveAdicional = async (index) => {
+    const adicional = formData.Adicionais[index];
+
+    try {
+      if (adicional.Id_AdicionaisFuncionario) {
+        await adicionaisController.deleteRecord(
+          adicional.Id_AdicionaisFuncionario
+        );
+      }
+
+      // Atualiza a lista local (UI).
+      setFormData((prev) => ({
+        ...prev,
+        Adicionais: prev.Adicionais.filter((_, i) => i !== index),
+      }));
+    } catch (error) {
+      console.error("Erro ao remover adicional:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -88,16 +101,13 @@ export default function ModalEditFuncionarios({
     };
 
     try {
-      console.log("funcionario Atualizado:", funcionarioAtualizado);
       await onUpdateFuncionario(funcionarioAtualizado);
 
-      console.log("Funcionário atualizado com sucesso: ", formData.adicionais);
-
       if (
-        formData.adicionais.length > 0 &&
+        formData.Adicionais.length > 0 &&
         funcionarioAtualizado.Id_Funcionario
       ) {
-        for (const adicional of formData.adicionais) {
+        for (const adicional of formData.Adicionais) {
           if (!adicional.Id_AdicionaisFuncionario) {
             await adicionaisController.create({
               Nome: adicional.nome || adicional.Nome,
@@ -248,10 +258,18 @@ export default function ModalEditFuncionarios({
                 <ol className="list-Adicionais-edit">
                   {formData.Adicionais.map((item, index) => (
                     <li key={index} className="list-item-edit">
-                      {item.Nome} - <FormatadorMoeda valor={item.Valor} />
-                      <a href="#" onClick={() => handleRemoveAdicional(index)}>
-                        <img src={RemoveIcon} alt="Remover" />
-                      </a>
+                      <span className="list-item-title-edit">
+                        {item.nome || item.Nome} -{" "}
+                        <FormatadorMoeda valor={item.valor || item.Valor} />
+                      </span>
+                      {item.Id_AdicionaisFuncionario && (
+                        <a
+                          href="#"
+                          onClick={() => handleRemoveAdicional(index)}
+                        >
+                          <img src={RemoveIcon} alt="Remover" />
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ol>
