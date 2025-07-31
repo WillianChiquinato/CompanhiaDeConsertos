@@ -6,6 +6,7 @@
     background-color: #EBEBEB;
     overflow-y: auto;
     color: black;
+    margin-bottom: 3rem;
 }
 
 .TituloFuncionarios {
@@ -13,7 +14,6 @@
     justify-content: center;
     text-align: center;
     font-size: 50px;
-    padding: 40px 0 0px 0;
 }
 
 .TituloHR {
@@ -27,6 +27,7 @@
     align-items: center;
     justify-content: space-evenly;
     margin-left: 23rem;
+    padding: 40px 0 0px 0;
 }
 
 .TitulosContainer img {
@@ -100,9 +101,13 @@
     justify-content: center;
     background-color: #D9D9D9;
     border-radius: 20px;
-    padding: 35px;
+    padding: 25px;
     border: solid 2px black;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.397);
+}
+
+.BoxFuncionariosList img {
+    border-radius: 10px;
 }
 
 .TitleFuncionariosList {
@@ -112,12 +117,25 @@
     white-space: nowrap;
     font-size: 32px;
     padding-bottom: 10px;
+    letter-spacing: 1.6px;
 }
 
 .ConteudoFuncionariosList {
     margin: 6px 0;
     font-size: 17px;
-    font-weight: bold;
+    font-weight: normal;
+}
+
+.TopicosTitle {
+    color: hsl(213, 40%, 25%);
+    font-weight: medium;
+    font-size: 22px;
+}
+
+.TopicosTitle2 {
+    color: hsl(213, 40%, 25%);
+    font-weight: medium;
+    font-size: 18px;
 }
 
 .ButtonsAlignFuncionariosList {
@@ -140,8 +158,36 @@
 
 .DetalhesFuncionariosList {
     background-color: #2300BD;
+    transition: 0.2s;
 }
 
 .EditarFuncionariosList {
     background-color: #ff0f2f;
+    transition: 0.2s;
+}
+
+.DetalhesFuncionariosList:hover {
+    scale: 1.1;
+}
+
+.EditarFuncionariosList:hover {
+    scale: 1.1;
+}
+
+.FooterFuncionarios 
+{
+    width: 75%;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: rgb(240, 240, 137);
+    color: rgb(56, 56, 56);
+}
+
+.FooterFuncionarios span {
+    padding-left: 1rem;
+    font-size: 40px;
 }

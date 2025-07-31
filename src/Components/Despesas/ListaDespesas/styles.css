@@ -48,7 +48,7 @@
 }
 
 .titleContent {
-    width: 100%;
+    width: clamp(200px, 50vw, 370px);
     background-color: #5b5b5b;
     color: #eeeeee;
     display: flex;
@@ -153,4 +153,9 @@
     border: 1.4px solid #afafaf;
     border-radius: 10px;
     margin-bottom: 1.2rem;
+}
+
+@media (max-width: 1700px) 
+{
+
 }

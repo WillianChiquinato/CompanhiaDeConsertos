@@ -47,7 +47,7 @@ export default function SideBar() {
           <img className="imagemFundoHeader" src={fundo} alt="fundoMenu" />
           <div className="header-Title">
             <img className="imagemHeader" src={logoEmpresa} alt="Logotipo" />
-            <span> Companhia de consertos</span>
+            <span> Companhia de consertos </span>
           </div>
           <hr />
 
@@ -97,9 +97,15 @@ export default function SideBar() {
             <span className="FotterTitle">@WillianChiquinato</span>
             <span className="FooterDirect">Todos os direitos reservados</span>
             <div className="LogoTiposFooter">
-              <img src={instagram} alt="Insta" width="40" />
-              <img src={github} alt="Github" width="40" />
-              <img src={linkedin} alt="Linkedin" width="40" />
+              <a href="https://www.linkedin.com/in/willian-de-sena-chiquinato-97b857260" target="_blank" rel="noopener noreferrer">
+                <img src={instagram} alt="Insta" />
+              </a>
+              <a href="https://github.com/WillianChiquinato" target="_blank" rel="noopener noreferrer">
+                <img src={github} alt="Github" />
+              </a>
+              <a href="https://www.linkedin.com/in/willian-de-sena-chiquinato-97b857260" target="_blank" rel="noopener noreferrer">
+                <img src={linkedin} alt="Linkedin" />
+              </a>
             </div>
           </div>
         </div>

@@ -31,77 +31,30 @@
 
 .OutAlign {
     display: flex;
-    justify-content: space-between;
-}
-
-.MesAno {
-    display: flex;
+    justify-content: end;
+    align-items: center;
     flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 0px 0px 100px;
-}
-
-.MesAnoMiddle {
-    padding-left: 220px;
-}
-
-.MesAnoTitle {
-    font-size: 40px;
-}
-
-.MesAnoAlign select {
-    color: #3b3b3b;
-    text-align: start;
-    font-family: "Lalezar", serif;
-    font-size: 18px;
-    font-weight: 400;
-    font-style: normal;
-    letter-spacing: 0.8px;
-    padding: 2px 80px 2px 7px;
-    margin: 2px;
-    border: 1px solid black;
-    border-radius: 3px;
-    background-color: #BBBBBB;
-}
-
-.MesAnoAlign select:focus {
-    outline: none;
-    border-color: #555;
-}
-
-.ButaoSearch {
-    all: unset;
-    cursor: pointer;
-    background-color: #104386;
-    color: #d4d4d4;
-    text-decoration: none;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 600;
-    margin: 15px 350px;
-    padding: 5px 15px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.514);
+    height: 16rem;
 }
 
 .ButaoExtract {
     all: unset;
     cursor: pointer;
-    background-color: #a7a7a7;
-    color: #191919;
+    background-color: #3d037f;
+    color: hsl(0, 0%, 90%);
     text-decoration: none;
     text-align: center;
-    font-size: 25px;
+    font-size: 40px;
     font-weight: 600;
     padding: 12px 25px;
-    margin: 100px 30px 35px 30px;
-    border-radius: 25px;
+    margin: 100px 0px 10px 0px;
+    border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.514);
-    transition: background-color 0.5s, color 0.5s;
+    transition: 0.5s;
 }
 
 .ButaoExtract:hover {
     background-color: #191919;
     color: #d4d4d4;
+    scale: 1.2;
 }

@@ -17,7 +17,7 @@ export default function ModalExtracao({ isOpen, onClose }) {
                         </span>
                     </div>
 
-                    <article className="OutAlign">
+                    <article className="OutAlignModal">
                         <div className="MesAnoModal">
                             <span className="MesAnoTitle"> MÊS / ANO </span>
                             <div className="MesAnoAlignModal">

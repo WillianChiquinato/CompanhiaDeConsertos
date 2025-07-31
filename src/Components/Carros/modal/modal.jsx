@@ -43,6 +43,7 @@ export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
         ? new Date(formData.dataCriacao).toISOString()
         : null,
       Descricao: formData.descricao,
+      retrabalho: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

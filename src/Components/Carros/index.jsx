@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import FormatadorMoeda from "../Utilitario/util";
 import carroImageParticular from "./assets/Particulares.jpg";
 import carroImageSeguradora from "./assets/Seguradoras.jpg";
 import Filtro from "./assets/Filtro.png";
@@ -15,9 +16,6 @@ function CarrosTitle({ classContainer, classTitle, title, number }) {
       <div className={classContainer}>
         <span className={classTitle}> {title}</span>
         <span className="TituloCarrosNumeros"> ({number}) </span>
-        <a href="">
-          <img src={Filtro} alt="FiltroCarros" />
-        </a>
       </div>
       <hr className="CarrosHR" />
     </>
@@ -38,9 +36,15 @@ function CarrosItem({
     <div className="BoxCarrosList">
       <span className="TitleCarrosList">{title}</span>
       <img src={image} alt={title} height={170} />
-      <span className="ConteudoCarrosList">Tipo: {type}</span>
-      <span className="ConteudoCarrosList">Proprietário: {owner}</span>
-      <span className="ConteudoCarrosList">Valor total (R$): {value}</span>
+      <span className="ConteudoCarrosList">
+        <span className="TopicosTitle">🔹Tipo:</span> {type}
+      </span>
+      <span className="ConteudoCarrosList">
+        <span className="TopicosTitle">🧑Proprietário:</span> {owner}
+      </span>
+      <span className="ConteudoCarrosList">
+        <span className="TopicosTitle">💰Valor total:</span> <FormatadorMoeda valor={value} />
+      </span>
 
       <div className="ButtonsAlignCarrosList">
         <button
@@ -111,6 +115,9 @@ export default function Carros() {
   const tipoCarroController = useApiController("tipocarro");
   const carroController = useApiController("carro");
 
+  const [filtroRetrabalho, setFiltroRetrabalho] = useState(null);
+  const [ordemCreatedAt, setOrdemCreatedAt] = useState("desc");
+
   const fetchData = async () => {
     try {
       // 1. Buscar os Tipos de Carros
@@ -137,7 +144,8 @@ export default function Carros() {
 
         Descricao: carro.Descricao,
         Data_Criacao: carro.Data_Criacao,
-        createdAt: carro.createdAt,
+        createdAt: carro.createdAt, 
+        retrabalho: carro.retrabalho,
       }));
 
       // 3. Separar em listas
@@ -224,10 +232,49 @@ export default function Carros() {
     setCarroParaEditar(null);
   };
 
+  const filtrarEOrdenarCarros = (carros) => {
+    let resultado = [...carros];
+
+    // Filtrar por retrabalho
+    if (filtroRetrabalho !== null) {
+      resultado = resultado.filter(
+        (carro) => Boolean(carro.retrabalho) === filtroRetrabalho
+      );
+    }
+
+    // Ordenar por createdAt
+    resultado.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+
+      return ordemCreatedAt === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    return resultado;
+  };
+
   return (
     <>
       <article className="Carros">
-        <span className="TituloCarros"> CARROS </span>
+        <div className="carrosTitulos">
+          <span className="TituloCarros"> CARROS </span>
+          <div className="dropdown">
+            <button className="filtro-btn">🔽 Filtros</button>
+            <div className="dropdown-content">
+              <span onClick={() => setFiltroRetrabalho(null)}>Todos</span>
+              <span onClick={() => setFiltroRetrabalho(true)}>
+                Retrabalho: Sim
+              </span>
+              <span onClick={() => setFiltroRetrabalho(false)}>
+                Retrabalho: Não
+              </span>
+              <span onClick={() => setOrdemCreatedAt("asc")}>Mais antigos</span>
+              <span onClick={() => setOrdemCreatedAt("desc")}>
+                Mais recentes
+              </span>
+            </div>
+          </div>
+        </div>
         <hr className="TituloHR" />
 
         {/* Lista carros particulares */}
@@ -235,7 +282,7 @@ export default function Carros() {
           classContainer="CarrosPv"
           classTitle="TituloCarrosPv"
           title="Carros Particulares"
-          number="30"
+          number={carrosParticulares.length}
         />
 
         {/* Agr a lista de carros adicionados: */}
@@ -249,7 +296,7 @@ export default function Carros() {
             onCreateCarro={handleCreateCarro}
           />
 
-          {carrosParticulares.map((carro) => (
+          {filtrarEOrdenarCarros(carrosParticulares).map((carro) => (
             <CarrosItem
               key={carro.id}
               {...carro}
@@ -267,7 +314,7 @@ export default function Carros() {
           classContainer="CarrosSeg"
           classTitle="TituloCarrosSeg"
           title="Carros Seguradora"
-          number="30"
+          number={carrosSeguradora.length}
         />
 
         <div className="CarrosList">
@@ -280,7 +327,7 @@ export default function Carros() {
             onCreateCarro={handleCreateCarro}
           />
 
-          {carrosSeguradora.map((carro) => (
+          {filtrarEOrdenarCarros(carrosSeguradora).map((carro) => (
             <CarrosItem
               key={carro.id}
               {...carro}

@@ -93,7 +93,6 @@
 
 .MesAnoAlignModal select {
     color: #3b3b3b;
-    text-align: start;
     font-family: "Lalezar", serif;
     font-size: 18px;
     font-weight: 400;
@@ -130,7 +129,7 @@
     all: unset;
     cursor: pointer;
     background-color: #104386;
-    color: #d4d4d4;
+    color: #ececec;
     text-decoration: none;
     text-align: center;
     font-size: 20px;
@@ -139,6 +138,13 @@
     padding: 5px 15px;
     border-radius: 5px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.514);
+    transition: 0.3s;
+}
+
+.ButaoExtractModal:hover 
+{
+    background-color: #2483ff;
+    color: #151515;
 }
 
 .modal-Input
@@ -156,7 +162,11 @@
     border: 1px solid black;
 }
 
-.OutAlign
+.OutAlignModal
 {
     margin-bottom: 10px;
+}
+
+.MesAnoTitle {
+    font-size: 40px;
 }

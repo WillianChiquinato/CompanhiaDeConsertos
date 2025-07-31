@@ -87,38 +87,8 @@ export default function Inicio() {
                     tecnologia”</span>
 
                 <article className="OutAlign">
-                    <div className="MesAno">
-                        <div className="MesAnoMiddle">
-                            <span className="MesAnoTitle"> MÊS / ANO </span>
-                            <div className="MesAnoAlign">
-                                <select id="monthSelect">
-                                    <option value="" disabled selected>Select month</option>
-                                    <option value="01">Janeiro</option>
-                                    <option value="02">Fevereiro</option>
-                                    <option value="03">Março</option>
-                                    <option value="04">Abril</option>
-                                    <option value="05">Maio</option>
-                                    <option value="06">Junho</option>
-                                    <option value="07">Julho</option>
-                                    <option value="08">Agosto</option>
-                                    <option value="09">Setembro</option>
-                                    <option value="10">Outubro</option>
-                                    <option value="11">Novembro</option>
-                                    <option value="12">Dezembro</option>
-                                </select>
-
-                                <select id="yearSelect">
-                                    <option value="" disabled selected>Year</option>
-                                    <option value="01">2025</option>
-                                    <option value="01">2026</option>
-                                </select>
-                            </div>
-
-                            <button className="ButaoSearch"> Atualizar </button>
-                        </div>
-                    </div>
-
                     <button onClick={openModal} className="ButaoExtract">EXTRAIR</button>
+                    <span>Extração de informações para documento em EXCEL</span>
 
                     <Modal isOpen={showModal} onClose={closeModal} />
                 </article>

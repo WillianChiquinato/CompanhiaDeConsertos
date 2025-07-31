@@ -23,10 +23,12 @@ function FuncionarioItem({
       <span className="TitleFuncionariosList">{title}</span>
       <img src={funcionarioPadrao} alt={image} height={200} />
       <span className="ConteudoFuncionariosList">
-        Salário: <FormatadorMoeda valor={salary} />
+        <span className="TopicosTitle">💰Salário:</span>{" "}
+        <FormatadorMoeda valor={salary} />
       </span>
       <span className="ConteudoFuncionariosList">
-        Adicionais Contagem: {adicionaisLista}
+        <span className="TopicosTitle2">➕Adicionais Contagem:</span>{" "}
+        {adicionaisLista}
       </span>
 
       <div className="ButtonsAlignFuncionariosList">
@@ -94,6 +96,8 @@ export default function Funcionarios() {
   const [adicionaisParaEditar, setAdicionaisParaEditar] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  const [ordemAlfabetica, setOrdemAlfabetica] = useState("asc");
+
   const adicionaisFuncionarioController = useApiController(
     "adicionaisfuncionario"
   );
@@ -104,7 +108,6 @@ export default function Funcionarios() {
       // 1. Buscar os Adicionais por Funcionário
       const adicionaisPorFuncionario =
         await adicionaisFuncionarioController.getAllGroupedByFuncionario();
-        
 
       // 2. Buscar os Funcionarios
       const funcionariosData = await FuncionarioController.getAll();
@@ -172,6 +175,14 @@ export default function Funcionarios() {
     setShowDeleteModal(false);
   };
 
+  const handleTotalSalaries = () => {
+    const total = funcionarios.reduce((acc, funcionario) => {
+      return acc + Number(funcionario.Salario);
+    }, 0);
+
+    return <FormatadorMoeda valor={total} />;
+  };
+
   const openModal = () => {
     setShowModal(true);
   };
@@ -201,12 +212,30 @@ export default function Funcionarios() {
     setAdicionaisParaEditar(null);
   };
 
+  const OrdenarFuncionarios = (funcionarios) => {
+    let resultado = [...funcionarios];
+
+    resultado.sort((a, b) => {
+      return ordemAlfabetica === "asc"
+        ? a.Nome.localeCompare(b.Nome)
+        : b.Nome.localeCompare(a.Nome);
+    });
+
+    return resultado;
+  };
+
   return (
     <>
       <article className="Funcionarios">
         <div className="TitulosContainer">
           <span className="TituloFuncionarios"> FUNCIONÁRIOS </span>
-          <img src={Filtro} alt="Filtro" className="FiltroFuncionarios" />
+          <div className="dropdown">
+            <button className="filtro-btn">🔽 Filtros</button>
+            <div className="dropdown-content">
+              <span onClick={() => setOrdemAlfabetica("asc")}>A - Z</span>
+              <span onClick={() => setOrdemAlfabetica("desc")}>Z - A</span>
+            </div>
+          </div>
         </div>
         <hr className="TituloHR" />
 
@@ -221,7 +250,7 @@ export default function Funcionarios() {
             adicionaisController={adicionaisFuncionarioController}
           />
 
-          {funcionarios.map((funcionario) => (
+          {OrdenarFuncionarios(funcionarios).map((funcionario) => (
             <FuncionarioItem
               key={funcionario.Id_Funcionario}
               id={funcionario.Id_Funcionario}
@@ -238,6 +267,10 @@ export default function Funcionarios() {
           ))}
         </div>
       </article>
+
+      <footer className="FooterFuncionarios">
+        <span>Total de salários: R${handleTotalSalaries()}</span>
+      </footer>
 
       <ModalConfirma
         isOpen={showDeleteModal}

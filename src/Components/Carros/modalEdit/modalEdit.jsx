@@ -62,6 +62,7 @@ export default function ModalEditCarros({
       createdAt: formData.createdAt,
       updatedAt: new Date().toISOString(),
       Proprietario: formData.Proprietario || formData.owner || "",
+      retrabalho: formData.retrabalho || false,
     };
 
     try {
@@ -113,12 +114,12 @@ export default function ModalEditCarros({
           <div className="checkbox-edit">
             <input
               type="checkbox"
-              name="Retrabalhado"
-              checked={formData.Retrabalhado || false}
+              name="retrabalho"
+              checked={formData.retrabalho || false}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  Retrabalhado: e.target.checked,
+                  retrabalho: e.target.checked,
                 }))
               }
             />

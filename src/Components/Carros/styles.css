@@ -8,12 +8,19 @@
     color: black;
 }
 
+.carrosTitulos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 40px 0 0px 0
+}
+
 .TituloCarros {
     display: flex;
     justify-content: center;
     text-align: center;
     font-size: 50px;
-    padding: 40px 0 0px 0;
+    margin-left: 24rem;
 }
 
 .TituloHR {
@@ -112,21 +119,26 @@
     justify-content: center;
     background-color: #D9D9D9;
     border-radius: 20px;
-    padding: 35px;
+    padding: 25px;
     border: solid 2px black;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.397);
+}
+
+.BoxCarrosList img {
+    border-radius: 10px;
 }
 
 .TitleCarrosList {
     text-align: center;
     font-size: 32px;
     padding-bottom: 10px;
+    letter-spacing: 1.6px;
 }
 
 .ConteudoCarrosList {
-    margin: 6px 0;
+    margin: 3px 0;
     font-size: 17px;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .ButtonsAlignCarrosList {
@@ -149,8 +161,62 @@
 
 .DetalhesCarrosList {
     background-color: #2300BD;
+    transition: 0.2s;
 }
 
 .EditarCarrosList {
     background-color: #ff0f2f;
+    transition: 0.2s;
+}
+
+.DetalhesCarrosList:hover {
+    scale: 1.1;
+}
+
+.EditarCarrosList:hover {
+    scale: 1.1;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 2rem;
+}
+
+.filtro-btn {
+  background-color: #041c83;
+  color: white;
+  padding: 8px 20px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+  z-index: 1;
+}
+
+.dropdown-content span {
+  color: black;
+  padding: 10px 12px;
+  font-size: 18px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content span:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
