@@ -6,8 +6,8 @@ import BotaoForms from "./assets/BotaoForms.png";
 import Modal from "../../Components/Carros/modal/modal";
 import ModalConfirma from "../../Components/Carros/modalConfirm/modalConfirma";
 import useApiController from "../../services/controller";
-import "./styles.css";
 import ModalEditCarros from "./modalEdit/modalEdit";
+import "./styles.css";
 
 function CarrosTitle({ classContainer, classTitle, title, number }) {
   return (

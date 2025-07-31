@@ -1,9 +1,124 @@
-.Depesas {
-    display: flex;
-    flex-direction: column;
+.Despesas {
     flex-grow: 1;
     margin-left: 25%;
     background-color: #EBEBEB;
     overflow-y: auto;
     color: black;
+}
+
+.TituloDespesas {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 50px;
+    padding: 40px 0 0px 0;
+}
+
+.TituloHR {
+    background-color: black;
+    height: 2px;
+    margin: 0 60px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  gap: 20px;
+}
+
+.tab-btn {
+    width: 15.8%;
+    align-items: center;
+    font-size: 25px;
+    padding: 25px 0px;
+    cursor: pointer;
+    background: #ffffff;
+    border: solid 2px #afafaf;
+    border-radius: 10px 10px 0 0;
+    transition: background-color 0.3s ease;
+}
+
+.tab-btn.active {
+  background: #2f13bb; 
+  color: white;
+  font-weight: bold;
+  border-color: #000000;
+}
+
+.form {
+    width: 50%;
+    display: none;
+    background: #cecece;
+    padding: 40px 60px;
+    border-radius: 0 0 10px 10px;
+    border: solid 2px #282829;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.344);
+}
+
+.active-form {
+    display: block;
+}
+
+.form label {
+    display: block;
+    text-align: start;
+    font-size: 35px;
+}
+
+.form input,
+.form select,
+.form textarea {
+    width: 100%;
+    font-weight: 400;
+    font-style: normal;
+    padding: 8px 15px;
+    margin-bottom: 40px;
+    border: 1px solid #424242;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    box-shadow: 0px 4px 6px rgba(54, 54, 54, 0.514);
+}
+
+.form button {
+    background: blue;
+    color: white;
+    padding: 15px 30px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.AlignButton {
+    display: flex;
+    justify-content: center;
+}
+
+.AlignButton button:hover {
+    scale: 1.2;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.topicosComIcon {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 5px;
+    gap: 10px;
+}
+
+.topicosComIcon img {
+    width: 50px;
+    height: 50px;
 }

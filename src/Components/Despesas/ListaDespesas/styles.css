@@ -1,0 +1,156 @@
+.DespesaLista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 20%;
+    padding: 10px;
+    margin: 2rem 2rem 2rem 0.2rem;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    border: solid 2px #afafaf;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.212);
+}
+
+.TituloDespesaLista {
+    font-size: 38px;
+    margin: 2rem 2rem 0.4rem 2rem;
+    text-align: center;
+}
+
+.TituloHRLista {
+    background-color: black;
+    width: 100%;
+    height: 2px;
+}
+
+.DespesaListaContainer {
+    width: 100%;
+    height: auto;
+    margin: 0.4rem 0;
+}
+
+.DespesaContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.accordionDespesas 
+{
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+}
+
+.titleContent {
+    width: 100%;
+    background-color: #5b5b5b;
+    color: #eeeeee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 10px;
+    padding: 0px 10px;
+    border-top-right-radius: 10px;
+}
+
+.titleContent button {
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.titleContent button:hover {
+    color: #cecece;
+}
+
+.accordionTitle {
+    font-size: 30px;
+}
+
+.containerDespesaItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.fundoConteudoItem {
+    width: 100%;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 8px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.accordionItem {
+    background-color: #f0f0f0;
+    color: #000000;
+    padding: 10px 8px;
+    margin-bottom: 12px;
+    border: 1.4px solid #afafaf;
+}
+
+.accordionItem li {
+    display: flex;
+    flex-direction: column;
+    font-size: 17px;
+}
+
+.itemNome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.btnDeletar {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    margin: 0.4rem 6rem;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.btnDeletar:hover {
+    background-color: #e60000;
+}
+
+.activeAcc {
+    max-height: 0;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: all 0.4s cubic-bezier(0, 1, 0, 1);
+}
+
+.activeAcc.show {
+    max-height: 500px;
+    transition: all 0.8s cubic-bezier(0, 1, 0, 1);
+}
+
+.wrapperDespesasTopicos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1.4px solid #afafaf;
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+}
