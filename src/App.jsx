@@ -6,6 +6,7 @@ import Inicio from "./Components/Inicio";
 import SideBar from "./Components/SideBar";
 import Funcionarios from "./Components/Funcionarios";
 import Despesas from "./Components/Despesas";
+import Indicadores from "./Components/Indicadores";
 
 export function FormatadorMoeda({ valor }) {
   const formatado = new Intl.NumberFormat("pt-BR", {
@@ -42,6 +43,7 @@ function App() {
             <Route path="/carros" element={<PrivateRoute><Carros /></PrivateRoute>} />
             <Route path="/funcionarios" element={<PrivateRoute><Funcionarios /></PrivateRoute>} />
             <Route path="/despesas/:id" element={<PrivateRoute><Despesas /></PrivateRoute>} />
+            <Route path="/indicadores" element={<PrivateRoute><Indicadores /></PrivateRoute>} />
           </Route>
 
           <Route path="*" element={<div>Pagina nao encontrada</div>} />

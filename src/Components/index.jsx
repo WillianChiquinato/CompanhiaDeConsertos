@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertMessage from "./Alerts/alertMessage";
+const LOGIN = import.meta.env.VITE_LOGIN_BASE;
+const SENHA = import.meta.env.VITE_SENHA_BASE;
 import "./stylesLogin.css";
 
 function Topicos({ title, value, onChange }) {
@@ -33,8 +35,8 @@ export default function Login() {
   const handleLogin = () => {
     // Hardcoded login
     if (
-      login === "murilo.canhao@CompanhiaDeConsertos.com" &&
-      senha === "M&r#loÉV*ad#"
+      login === LOGIN &&
+      senha === SENHA
     ) {
       localStorage.setItem("logged", "true");
       navigate("/inicio");

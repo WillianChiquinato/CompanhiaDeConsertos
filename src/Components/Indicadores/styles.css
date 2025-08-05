@@ -1,0 +1,157 @@
+.Indicadores {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 25%;
+    background-color: #EBEBEB;
+    overflow-y: auto;
+    color: black;
+    margin-bottom: 3rem;
+}
+
+.ParteSuperior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.IndicadorSuperior {
+    min-height: 10rem;
+    flex: 1;
+    display: flex;
+    color: #2c3e50;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #e4eaf5;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1400px) {
+    .IndicadorSuperior {
+        min-width: 16rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .ParteSuperior {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .IndicadorSuperior {
+        min-width: 20rem;
+        flex: 0 1 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .IndicadorSuperior {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+}
+
+.tituloIndicador {
+    font-size: 1.9rem;
+    font-weight: medium;
+    margin-bottom: 0.5rem;
+}
+
+.valorIndicador {
+    font-size: 1.6rem;
+}
+
+.lucro {
+    color: rgb(31, 173, 31);
+}
+
+.despesa {
+    color: rgb(200, 16, 16);
+}
+
+.faturamento {
+    color: rgb(170, 177, 25);
+}
+
+.ticketMedio {
+    color: rgb(190, 109, 47);
+}
+
+.numerico {
+    color: rgb(93, 93, 25);
+}
+
+.dashboard-section {
+    padding: 2rem;
+    background: linear-gradient(135deg, #e6e9ed 0%, #d3dcec 100%);
+    margin: 1rem 2rem;
+    border-radius: 15px;
+    border: solid #ccc 1px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.dashboard-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .charts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+.chart-container {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.chart-title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.chart-wrapper {
+    height: 300px;
+    position: relative;
+}
