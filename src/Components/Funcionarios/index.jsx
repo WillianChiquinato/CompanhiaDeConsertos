@@ -7,6 +7,7 @@ import Modal from "../Funcionarios/modal/modal";
 import ModalConfirma from "../Funcionarios/modalConfirmFunc/modalConfirma";
 import useApiController from "../../services/controller";
 import ModalEditFuncionario from "./modalEditFunc/modalEdit";
+import AlertMessage from "../Alerts/alertMessage";
 import "./styles.css";
 
 function FuncionarioItem({
@@ -98,6 +99,8 @@ export default function Funcionarios() {
 
   const [ordemAlfabetica, setOrdemAlfabetica] = useState("asc");
 
+  const [alert, setAlert] = useState(null);
+
   const adicionaisFuncionarioController = useApiController(
     "adicionaisfuncionario"
   );
@@ -135,9 +138,16 @@ export default function Funcionarios() {
     try {
       const funcionarioCriado = await FuncionarioController.create(novoFunci);
       await fetchData();
+      setAlert({ message: "Funcionario criado com sucesso!", type: "success" });
+      // Remove o alerta após 3 segundos
+      setTimeout(() => setAlert(null), 3000);
+
       return funcionarioCriado;
     } catch (error) {
       console.error("Erro ao criar funcionario:", error);
+      setAlert({ message: "Erro ao criar o funcionario. Tente novamente.", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
+
       throw error;
     }
   };
@@ -151,9 +161,14 @@ export default function Funcionarios() {
         funcionarioAtualizado.Id_Funcionario,
         funcionarioAtualizado
       );
+      setAlert({ message: "Funcionario atualizado com sucesso!", type: "success" });
+      setTimeout(() => setAlert(null), 3000);
+
       await fetchData();
     } catch (error) {
       console.error("Erro ao atualizar funcionario:", error);
+      setAlert({ message: "Erro ao atualizar o funcionario...", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
     }
   };
 
@@ -165,11 +180,15 @@ export default function Funcionarios() {
       console.log(
         `Funcionario ${funcionarioParaRemover.id} removido com sucesso.`
       );
+      setAlert({ message: "Funcionario removido com sucesso!", type: "success" });
+      setTimeout(() => setAlert(null), 3000);
 
       // Atualiza a lista de funcionarios
       await fetchData();
     } catch (error) {
       console.error("Erro ao remover funcionario:", error);
+      setAlert({ message: "Erro ao remover o funcionario.", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
     }
 
     setShowDeleteModal(false);
@@ -288,6 +307,8 @@ export default function Funcionarios() {
           adicionaisController={adicionaisFuncionarioController}
         />
       )}
+
+      {alert && <AlertMessage message={alert.message} type={alert.type} />}
     </>
   );
 }

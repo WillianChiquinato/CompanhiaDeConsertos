@@ -5,6 +5,7 @@ import DataIcon from "./assets/deadline.png";
 import ValorIcon from "./assets/deposit.png";
 import DescricaoIcon from "./assets/description.png";
 import ListaDespesas from "./ListaDespesas";
+import AlertMessage from "../Alerts/alertMessage";
 import "./styles.css";
 
 function FormularioBase({
@@ -145,6 +146,8 @@ export default function Despesas() {
   const [contas, setContas] = useState([]);
   const [outros, setOutros] = useState([]);
 
+  const [alert, setAlert] = useState(null);
+
   const tipoDespesaController = useApiController("tipodespesa");
   const despesaController = useApiController("despesa");
 
@@ -185,9 +188,14 @@ export default function Despesas() {
       console.log("Criando despesa:", novaDespesa);
       const despesaCriada = await despesaController.create(novaDespesa);
       await fetchData();
+      setAlert({ message: "Despesa criada com sucesso!", type: "success" });
+      setTimeout(() => setAlert(null), 3000);
+
       return despesaCriada;
     } catch (error) {
       console.error("Erro ao criar despesa:", error);
+      setAlert({ message: "Erro ao criar a despesa.", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
     }
   };
 
@@ -199,11 +207,15 @@ export default function Despesas() {
       console.log(
         `Despesa ${id} removida com sucesso.`
       );
+      setAlert({ message: "Despesa removida com sucesso!", type: "success" });
+      setTimeout(() => setAlert(null), 3000);
 
       // Atualiza a lista de despesas
       await fetchData();
     } catch (error) {
       console.error("Erro ao remover despesa:", error);
+      setAlert({ message: "Erro ao remover a despesa.", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
     }
   };
 
@@ -288,6 +300,8 @@ export default function Despesas() {
         selectedAccordion={selectedAccordion}
         handleDeleteDespesa={handleDeleteDespesa}
       />
+
+      {alert && <AlertMessage message={alert.message} type={alert.type} />}
     </>
   );
 }

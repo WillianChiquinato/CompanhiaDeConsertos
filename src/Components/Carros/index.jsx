@@ -8,6 +8,7 @@ import Modal from "../../Components/Carros/modal/modal";
 import ModalConfirma from "../../Components/Carros/modalConfirm/modalConfirma";
 import useApiController from "../../services/controller";
 import ModalEditCarros from "./modalEdit/modalEdit";
+import AlertMessage from "../Alerts/alertMessage";
 import "./styles.css";
 
 function CarrosTitle({ classContainer, classTitle, title, number }) {
@@ -118,6 +119,8 @@ export default function Carros() {
   const [filtroRetrabalho, setFiltroRetrabalho] = useState(null);
   const [ordemCreatedAt, setOrdemCreatedAt] = useState("desc");
 
+  const [alert, setAlert] = useState(null);
+
   const fetchData = async () => {
     try {
       // 1. Buscar os Tipos de Carros
@@ -169,8 +172,14 @@ export default function Carros() {
     try {
       await carroController.create(novoCarro);
       await fetchData();
+      setAlert({ message: "Carro criado com sucesso!", type: "success" });
+      // Remove o alerta após 3 segundos
+      setTimeout(() => setAlert(null), 3000);
     } catch (error) {
       console.error("Erro ao criar carro:", error);
+      setAlert({ message: "Erro ao criar o carro. Tente novamente.", type: "error" });
+      // Remove o alerta após 3 segundos
+      setTimeout(() => setAlert(null), 3000);
     }
   };
 
@@ -181,9 +190,14 @@ export default function Carros() {
     try {
       await carroController.update(carroAtualizado.Id_Carro, carroAtualizado);
       console.log(`Carro ${carroParaEditar} atualizado com sucesso.`);
+      setAlert({ message: "Carro atualizado com sucesso!", type: "success" });
+      setTimeout(() => setAlert(null), 3000);
+
       await fetchData();
     } catch (error) {
       console.error("Erro ao atualizar carro:", error);
+      setAlert({ message: "Erro ao atualizar o carro...", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
     }
   };
 
@@ -193,11 +207,16 @@ export default function Carros() {
     try {
       await carroController.deleteRecord(carroParaRemover.id);
       console.log(`Carro ${carroParaRemover.id} removido com sucesso.`);
+      setAlert({ message: "Carro removido com sucesso!", type: "success" });
+      setTimeout(() => setAlert(null), 3000);
 
       // Atualiza a lista de carros
       await fetchData();
     } catch (error) {
       console.error("Erro ao remover carro:", error);
+      setAlert({ message: "Erro ao remover o carro.", type: "error" });
+      setTimeout(() => setAlert(null), 3000);
+
     }
 
     setShowDeleteModal(false);
@@ -356,6 +375,8 @@ export default function Carros() {
           carroData={carroParaEditar}
         />
       )}
+
+      {alert && <AlertMessage message={alert.message} type={alert.type} />}
     </>
   );
 }

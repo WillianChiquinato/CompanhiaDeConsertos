@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import Login from "./Components/index.jsx";
 import Carros from "./Components/Carros";
 import Inicio from "./Components/Inicio";
 import SideBar from "./Components/SideBar";
@@ -24,20 +25,26 @@ function LayoutPadrao() {
   );
 }
 
-function App() {
+function PrivateRoute({ children }) {
+  const isLogged = localStorage.getItem("logged") === "true";
+  return isLogged ? children : <Navigate to="/" />;
+}
 
+function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Login />} />
+
           <Route element={<LayoutPadrao />}>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/carros" element={<Carros />} />
-            <Route path="/funcionarios" element={<Funcionarios />} />
-            <Route path="/despesas/:id" element={<Despesas />} />
+            <Route path="/inicio" element={<PrivateRoute><Inicio /></PrivateRoute>} />
+            <Route path="/carros" element={<PrivateRoute><Carros /></PrivateRoute>} />
+            <Route path="/funcionarios" element={<PrivateRoute><Funcionarios /></PrivateRoute>} />
+            <Route path="/despesas/:id" element={<PrivateRoute><Despesas /></PrivateRoute>} />
           </Route>
 
-          <Route path="*" element={<div>Pagina nao encontrada</div>}/>
+          <Route path="*" element={<div>Pagina nao encontrada</div>} />
         </Routes>
       </BrowserRouter>
     </div>

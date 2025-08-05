@@ -11,7 +11,7 @@ import linkedin from "./assets/linkedin.png";
 import instagram from "./assets/instagram.png";
 import github from "./assets/github.png";
 import "./styles.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function SideBarRepeat({ propsID, propsHref, propsImage, children }) {
   const location = useLocation();
@@ -40,6 +40,13 @@ function SideBarRepeat({ propsID, propsHref, propsImage, children }) {
 }
 
 export default function SideBar() {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("logged");
+    navigate("/");
+  };
+
   return (
     <>
       <aside className="HeaderContents">
@@ -53,7 +60,7 @@ export default function SideBar() {
 
           <SideBarRepeat
             propsID="inicioHeader"
-            propsHref="/"
+            propsHref="/inicio"
             propsImage={home}
             children="Início"
           />
@@ -87,7 +94,7 @@ export default function SideBar() {
           />
 
           <div className="TopicosHeader">
-            <a className="containerTopico Efeito" href="">
+            <a className="containerTopico Efeito" href="/" onClick={() => {logout()}}>
               <img className="IconTopico" src={sair} alt="" />
               <span className="textoTopico">Sair</span>
             </a>

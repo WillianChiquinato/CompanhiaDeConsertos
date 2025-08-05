@@ -1,0 +1,25 @@
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: #d12e22cf;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  letter-spacing: 3px;
+  font-size: 18px;
+  z-index: 9999;
+  animation: fadeInOut 3s forwards;
+}
+
+.alert.success {
+  background-color: #4CAF50;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}

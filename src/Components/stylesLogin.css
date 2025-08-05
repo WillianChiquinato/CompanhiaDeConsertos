@@ -1,0 +1,94 @@
+.background {
+    background-color: #b580ff;
+    background-image: url("../assets/Fundo2.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.Titlelogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    text-align: center;
+    gap: 10px;
+    z-index: 2;
+}
+
+.ContainerLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(224, 157, 255, 0.8);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(223, 105, 255, 0.538);
+    border: solid 0.6px #ffffff;
+    z-index: 10;
+}
+
+.ContainerLogin h1 {
+    font-size: 50px;
+}
+
+.ContainerLogin h4 {
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+.TopicosContent {
+    width: 100%;
+    display: flex;
+    margin: 17px 0px;
+    gap: 20px;
+}
+
+.TopicosContent input {
+    width: 100%;
+    padding: 0rem 0.6rem;
+    font-size: 20px;
+}
+
+.TopicosContentTitle {
+    width: 120px;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.ContainerLogin button {
+    width: 200px;
+    padding: 0.3rem;
+    margin-top: 2rem;
+    font-size: 30px;
+    background-color: #002aff;
+    font-family: "Lalezar", serif;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.ContainerLogin button:hover {
+    background-color: #002449;
+    scale: 1.1;
+}
