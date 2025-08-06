@@ -1,13 +1,39 @@
+/* ========== VARIÁVEIS CSS ========== */
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #f093fb;
+  --text-color: #2d3748;
+  --text-light: #4a5568;
+  --white: #ffffff;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-dark: rgba(0, 0, 0, 0.3);
+  --border-radius: 12px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== RESET E BASE ========== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== BACKGROUND ========== */
 .background {
-    background-color: #b580ff;
-    background-image: url("../assets/Fundo2.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background-image: url("../assets/Fundo2.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
 }
 
 .background::before {
@@ -17,78 +43,237 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
   z-index: 1;
 }
 
-.Titlelogin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 50px;
-    text-align: center;
-    gap: 10px;
-    z-index: 2;
-}
-
+/* ========== CONTAINER LOGIN ========== */
 .ContainerLogin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(224, 157, 255, 0.8);
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 4px 20px rgba(223, 105, 255, 0.538);
-    border: solid 0.6px #ffffff;
-    z-index: 10;
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius);
+  padding: 3rem;
+  min-width: 400px;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 
+    0 20px 40px var(--shadow-dark),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.ContainerLogin h1 {
-    font-size: 50px;
+.ContainerLogin:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 25px 50px var(--shadow-dark),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* ========== TÍTULO ========== */
+.Titlelogin {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.Titlelogin h1 {
+  font-size: clamp(2.1rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--text-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .ContainerLogin h4 {
-    font-size: 17px;
-    margin-bottom: 30px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
+/* ========== CAMPOS DE INPUT ========== */
 .TopicosContent {
-    width: 100%;
-    display: flex;
-    margin: 17px 0px;
-    gap: 20px;
-}
-
-.TopicosContent input {
-    width: 100%;
-    padding: 0rem 0.6rem;
-    font-size: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .TopicosContentTitle {
-    width: 120px;
-    font-size: 28px;
-    margin-bottom: 5px;
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
 }
 
+.TopicosContentTitle u {
+  text-decoration: none;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.TopicosContent input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text-color);
+  transition: var(--transition);
+  outline: none;
+}
+
+.TopicosContent input::placeholder {
+  color: #a0aec0;
+  font-weight: bold;
+}
+
+.TopicosContent input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.TopicosContent input:hover {
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* ========== BOTÃO ========== */
 .ContainerLogin button {
-    width: 200px;
-    padding: 0.3rem;
-    margin-top: 2rem;
-    font-size: 30px;
-    background-color: #002aff;
-    font-family: "Lalezar", serif;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: 0.4s;
+  width: 100%;
+  padding: 0.7rem 1.8rem;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-family: inherit;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.ContainerLogin button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.ContainerLogin button:hover::before {
+  left: 100%;
 }
 
 .ContainerLogin button:hover {
-    background-color: #002449;
-    scale: 1.1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.ContainerLogin button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 480px) {
+  .background {
+    padding: 15px;
+  }
+  
+  .ContainerLogin {
+    min-width: unset;
+    padding: 2rem 1.5rem;
+  }
+  
+  .Titlelogin h1 {
+    font-size: 1.8rem;
+  }
+  
+  .ContainerLogin h4 {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .TopicosContent {
+    margin-bottom: 1.25rem;
+  }
+  
+  .TopicosContent input {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+  
+  .ContainerLogin button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .ContainerLogin {
+    padding: 1.5rem 1rem;
+  }
+  
+  .Titlelogin h1 {
+    font-size: 1.6rem;
+  }
+}
+
+/* ========== MODO ESCURO (OPCIONAL) ========== */
+@media (prefers-color-scheme: dark) {
+  .ContainerLogin {
+    background: rgba(26, 32, 44, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .Titlelogin h1 {
+    color: var(--white);
+  }
+  
+  .ContainerLogin h4 {
+    color: #a0aec0;
+  }
+  
+  .TopicosContentTitle {
+    color: var(--white);
+  }
+  
+  .TopicosContent input {
+    background: rgba(45, 55, 72, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+  }
+  
+  .TopicosContent input::placeholder {
+    color: #718096;
+  }
 }

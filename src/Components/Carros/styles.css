@@ -104,11 +104,18 @@
     padding: 35px;
     border: solid 2px black;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.397);
+    transition: 0.2s;
 }
 
 .BoxAddCarro a img {
     width: 90px;
     height: 90px;
+    transition: 0.2s;
+}
+
+.BoxAddCarro a img:hover {
+    scale: 1.1;
+    transition: 0.2s;
 }
 
 /* Lista de carros adicionados */

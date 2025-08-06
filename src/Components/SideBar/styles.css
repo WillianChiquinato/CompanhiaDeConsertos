@@ -76,24 +76,30 @@ hr {
 .TopicosHeader {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .containerTopico {
-    width: 100%;
+    width: 85%;
     cursor: pointer;
     text-decoration: none;
     display: flex;
     align-items: center;
     text-align: center;
-    margin-top: 30px;
     padding-left: 35px;
     padding-top: 20px;
     padding-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #0b0b0b69;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
     transition: 0.3s;
 }
 
 .containerTopico:hover {
     background-color: #2D38B8;
+    opacity: 0.9;
     scale: 1.05;
 }
 
