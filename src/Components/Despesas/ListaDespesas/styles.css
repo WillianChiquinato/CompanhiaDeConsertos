@@ -4,30 +4,43 @@
     align-items: center;
     justify-content: start;
     width: 20%;
-    padding: 10px;
+    padding: 24px;
     margin: 2rem 2rem 2rem 0.2rem;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    border: solid 2px #afafaf;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.212);
+    background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.DespesaLista:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .TituloDespesaLista {
-    font-size: 38px;
-    margin: 2rem 2rem 0.4rem 2rem;
+    font-size: 40px;
+    margin: 0 0 24px 0;
     text-align: center;
+    background: linear-gradient(135deg, #240449, #002155, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
 }
 
 .TituloHRLista {
-    background-color: black;
+    background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
     width: 100%;
-    height: 2px;
+    height: 1px;
+    border: none;
+    margin-bottom: 20px;
 }
 
 .DespesaListaContainer {
     width: 100%;
     height: auto;
-    margin: 0.4rem 0;
+    margin: 0;
 }
 
 .DespesaContent {
@@ -36,44 +49,66 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 16px;
 }
 
-.accordionDespesas 
-{
+.accordionDespesas {
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .titleContent {
-    width: clamp(200px, 50vw, 370px);
-    background-color: #5b5b5b;
-    color: #eeeeee;
+    width: 100%;
+    background: linear-gradient(135deg, #475569, #64748b);
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top-left-radius: 10px;
-    padding: 0px 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 16px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.titleContent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #160028, #030038, #453174);
 }
 
 .titleContent button {
-    background-color: transparent;
+    background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
     border: none;
-    font-size: 25px;
+    font-size: 20px;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
 }
 
 .titleContent button:hover {
-    color: #cecece;
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 .accordionTitle {
-    font-size: 30px;
+    font-size: 25px;
+    letter-spacing: -0.25px;
 }
 
 .containerDespesaItem {
@@ -82,67 +117,153 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.containerDespesaItem:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .fundoConteudoItem {
     width: 100%;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px 8px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    min-width: 380px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    color: #1e293b;
+    padding: 20px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 1px solid #e2e8f0;
+    border-top: none;
 }
 
 .accordionItem {
-    background-color: #f0f0f0;
-    color: #000000;
-    padding: 10px 8px;
-    margin-bottom: 12px;
-    border: 1.4px solid #afafaf;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    color: #334155;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.accordionItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #4e00a8, #001433);
+}
+
+.accordionItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
 }
 
 .accordionItem li {
     display: flex;
     flex-direction: column;
-    font-size: 17px;
+    font-size: 16px;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.accordionItem li span {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.accordionItem li span strong {
+    color: #394556;
+    margin-right: 8px;
 }
 
 .itemNome {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 25px;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: #1e293b;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #3e00ce;
 }
 
 .btnDeletar {
-    background-color: #ff4d4d;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     color: white;
-    padding: 10px 20px;
-    margin: 0.4rem 6rem;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 12px 24px;
+    margin: 16px auto 0;
+    font-size: 16px;
+    font-weight: 600;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.5s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.btnDeletar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    transition: 0.4s;
 }
 
 .btnDeletar:hover {
-    background-color: #e60000;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    transition: 0.2s;
+}
+
+.btnDeletar:hover::before {
+    left: 100%;
+}
+
+.btnDeletar:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .activeAcc {
     max-height: 0;
     overflow: hidden;
-    overflow-y: auto;
-    transition: all 0.4s cubic-bezier(0, 1, 0, 1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
 }
 
 .activeAcc.show {
     max-height: 500px;
-    transition: all 0.8s cubic-bezier(0, 1, 0, 1);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: scroll;
+    opacity: 1;
+}
+
+/* Tirar a barra de scroll */
+.activeAcc::-webkit-scrollbar {
+    display: none;
 }
 
 .wrapperDespesasTopicos {
@@ -150,12 +271,81 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1.4px solid #afafaf;
-    border-radius: 10px;
-    margin-bottom: 1.2rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
 }
 
-@media (max-width: 1700px) 
-{
+.wrapperDespesasTopicos:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
 
+@media (max-width: 1700px) {
+    .DespesaLista {
+        width: 25%;
+        margin: 1rem;
+    }
+
+    .TituloDespesaLista {
+        font-size: 28px;
+    }
+
+    .accordionTitle {
+        font-size: 20px;
+    }
+
+    .itemNome {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .DespesaLista {
+        width: 30%;
+    }
+
+    .accordionItem li span {
+        font-size: 14px;
+    }
+
+    .btnDeletar {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .DespesaLista {
+        width: 90%;
+        margin: 1rem auto;
+    }
+
+    .TituloDespesaLista {
+        font-size: 24px;
+    }
+
+    .accordionTitle {
+        font-size: 18px;
+    }
+
+    .titleContent {
+        padding: 12px 16px;
+    }
+
+    .fundoConteudoItem {
+        padding: 16px;
+    }
+
+    .accordionItem {
+        padding: 16px;
+    }
+
+    .itemNome {
+        font-size: 16px;
+        padding: 8px;
+    }
 }

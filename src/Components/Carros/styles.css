@@ -107,6 +107,11 @@
     transition: 0.2s;
 }
 
+.BoxAddCarro:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.5);
+}
+
 .BoxAddCarro a img {
     width: 90px;
     height: 90px;
@@ -129,6 +134,12 @@
     padding: 25px;
     border: solid 2px black;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.397);
+    transition: 0.2s;
+}
+
+.BoxCarrosList:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.5);
 }
 
 .BoxCarrosList img {

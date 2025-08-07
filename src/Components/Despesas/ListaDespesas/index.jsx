@@ -31,7 +31,6 @@ export default function ListaDespesas({
                         selectedAccordion === 0 ? "activeAcc show" : "activeAcc"
                       }
                     >
-                      {/* Aqui você pode mapear as despesas de equipamentos */}
                       {equipamentos.map((despesa, index) => (
                         <div className="accordionItem" key={index}>
                           <span className="itemNome">
@@ -79,7 +78,6 @@ export default function ListaDespesas({
                         selectedAccordion === 1 ? "activeAcc show" : "activeAcc"
                       }
                     >
-                      {/* Aqui você pode mapear as despesas de equipamentos */}
                       {contas.map((despesa, index) => (
                         <div className="accordionItem" key={index}>
                           <span className="itemNome">
@@ -127,7 +125,6 @@ export default function ListaDespesas({
                         selectedAccordion === 2 ? "activeAcc show" : "activeAcc"
                       }
                     >
-                      {/* Aqui você pode mapear as despesas de equipamentos */}
                       {outros.map((despesa, index) => (
                         <div className="accordionItem" key={index}>
                           <span className="itemNome">
