@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import FormatadorMoeda from "../../Utilitario/util";
-import FuncionarioPadrao from "../assets/FuncionarioPadrao.png";
 import NomeIcon from "../assets/NomeIcon.png";
 import DescricaoIcon from "../assets/Descricao.png";
 import CpfIcon from "../assets/CpfIcon.png";
@@ -8,7 +7,6 @@ import CepIcon from "../assets/CepIcon.png";
 import SalarioIcon from "../assets/Salario.png";
 import ListaAddIcon from "../assets/Lista.png";
 import RemoveIcon from "../assets/Lixeira.png";
-import ModalFuncionarios from "../index";
 import "./modalEdit.css";
 
 export default function ModalEditFuncionarios({
@@ -94,7 +92,7 @@ export default function ModalEditFuncionarios({
       Id_Funcionario: formData.Id_Funcionario,
       Nome: formData.Nome || formData.title,
       Salario: formData.Salario || formData.value,
-      Imagem: "funcionarioPadrao.png", // Placeholder, adjust as needed
+      Imagem: formData.Imagem || "",
       Descricao: formData.Descricao,
       createdAt: formData.createdAt,
       updatedAt: new Date().toISOString(),
@@ -151,7 +149,7 @@ export default function ModalEditFuncionarios({
         </div>
 
         <div className="modal-image-edit">
-          <img src={FuncionarioPadrao} alt={formData.Nome} />
+          <img src={formData.Imagem} alt={formData.Nome} />
         </div>
 
         <form onSubmit={handleSubmit}>

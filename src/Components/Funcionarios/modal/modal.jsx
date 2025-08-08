@@ -1,5 +1,6 @@
-import "./modal.css";
+import { avatarOptionsFuncionarios } from "../../../data/avatars.jsx";
 import { useState, useEffect } from "react";
+import "./modal.css";
 
 export default function ModalFuncionarios({
   isOpen,
@@ -28,7 +29,7 @@ export default function ModalFuncionarios({
   }, [isOpen]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
     let newValue = value;
 
@@ -43,7 +44,7 @@ export default function ModalFuncionarios({
 
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "imagem" ? files[0] : newValue,
+      [name]: newValue,
     }));
   };
 
@@ -54,14 +55,14 @@ export default function ModalFuncionarios({
       Id_Funcionario: formData.cpf,
       Nome: formData.nome,
       Salario: parseFloat(formData.salario),
-      Imagem: formData.imagem ? formData.imagem.name : "",
+      Imagem: formData.imagem || "",
       Descricao: formData.descricao,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
     console.log("Enviando funcionário:", novoFuncionario);
-    
+
     try {
       // Cria o funcionário e obtém o ID
       const funcionarioCriado = await onCreateFuncionario(novoFuncionario);
@@ -170,8 +171,31 @@ export default function ModalFuncionarios({
             onChange={handleChange}
           />
 
-          <label>Imagem</label>
-          <input type="file" name="imagem" onChange={handleChange} />
+          <label>Imagem (Avatar)</label>
+          <select
+            name="imagem"
+            id="imagem"
+            value={formData.imagem || ""}
+            onChange={handleChange}
+          >
+            <option value="">Selecione um avatar</option>
+            {avatarOptionsFuncionarios.map((avatar, index) => (
+              <option key={index} value={avatar.src}>
+                {avatar.label}
+              </option>
+            ))}
+          </select>
+
+          {/* Preview do avatar escolhido */}
+          {formData.imagem && (
+            <div style={{ marginTop: "10px" }}>
+              <img
+                src={formData.imagem}
+                alt="Avatar selecionado"
+                style={{ width: 80, height: 80, borderRadius: "50%" }}
+              />
+            </div>
+          )}
 
           <div className="AdicionaisContainer">
             <div className="AdicionaisContent">

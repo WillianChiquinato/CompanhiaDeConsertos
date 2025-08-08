@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import FormatadorMoeda from "../Utilitario/util";
-import funcionarioPadrao from "../Funcionarios/assets/FuncionarioPadrao.png";
-import Filtro from "./assets/Filtro.png";
 import BotaoForms from "./assets/BotaoForms.png";
 import Modal from "../Funcionarios/modal/modal";
 import ModalConfirma from "../Funcionarios/modalConfirmFunc/modalConfirma";
@@ -22,7 +20,7 @@ function FuncionarioItem({
   return (
     <div className="BoxFuncionariosList">
       <span className="TitleFuncionariosList">{title}</span>
-      <img src={funcionarioPadrao} alt={image} height={200} />
+      <img src={image} alt={image} />
       <span className="ConteudoFuncionariosList">
         <span className="TopicosTitle">💰Salário:</span>{" "}
         <FormatadorMoeda valor={salary} />
