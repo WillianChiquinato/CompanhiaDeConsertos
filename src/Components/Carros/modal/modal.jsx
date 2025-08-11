@@ -1,5 +1,6 @@
-import "./modal.css";
+import { avatarOptionsCarros } from "../../../data/avatars.jsx";
 import { useState, useEffect } from "react";
+import "./modal.css";
 
 export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
   const [formData, setFormData] = useState({
@@ -20,10 +21,10 @@ export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
   }, [tipo]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "imagem" ? files[0] : value,
+      [name]: value,
     }));
   };
 
@@ -38,7 +39,7 @@ export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
       ValorTotal: parseFloat(formData.valorTotal),
       FK_TipoCarro: tipoId,
       Proprietario: formData.nomeProprietario,
-      Imagem: formData.imagem ? formData.imagem.name : "",
+      Imagem: formData.imagem || "",
       Data_Criacao: formData.dataCriacao
         ? new Date(formData.dataCriacao).toISOString()
         : null,
@@ -80,7 +81,7 @@ export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="FormularioContainer">
           <label>Data Criação</label>
           <input
             type="date"
@@ -96,10 +97,27 @@ export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
             value={formData.nomeVeiculo}
             onChange={handleChange}
           >
-            <option value="">Digite algo</option>
+            <option value="">Selecione um veículo</option>
             <option value="Gol">Gol</option>
             <option value="Onix">Onix</option>
             <option value="Corolla">Corolla</option>
+            <option value="Civic">Civic</option>
+            <option value="Uno">Uno</option>
+            <option value="HB20">HB20</option>
+            <option value="Palio">Palio</option>
+            <option value="Fiesta">Fiesta</option>
+            <option value="Cruze">Cruze</option>
+            <option value="Kwid">Kwid</option>
+            <option value="Sandero">Sandero</option>
+            <option value="Duster">Duster</option>
+            <option value="Renegade">Renegade</option>
+            <option value="Compass">Compass</option>
+            <option value="Toro">Toro</option>
+            <option value="Strada">Strada</option>
+            <option value="S10">S10</option>
+            <option value="Hilux">Hilux</option>
+            <option value="Saveiro">Saveiro</option>
+            <option value="Amarok">Amarok</option>
           </select>
 
           <label>Nome Proprietário</label>
@@ -111,8 +129,31 @@ export default function ModalCarros({ isOpen, onClose, tipo, onCreateCarro }) {
             onChange={handleChange}
           />
 
-          <label>Imagem</label>
-          <input type="file" name="imagem" onChange={handleChange} />
+          <label>Imagem (Avatar)</label>
+          <select
+            name="imagem"
+            id="imagem"
+            value={formData.imagem || ""}
+            onChange={handleChange}
+          >
+            <option value="">Selecione um avatar</option>
+            {avatarOptionsCarros.map((avatar, index) => (
+              <option key={index} value={avatar.src}>
+                {avatar.label}
+              </option>
+            ))}
+          </select>
+
+          {/* Preview do avatar escolhido */}
+          {formData.imagem && (
+            <div style={{ marginTop: "10px" }}>
+              <img
+                src={formData.imagem}
+                alt="Avatar selecionado"
+                style={{ width: 80, height: 80, borderRadius: "50%" }}
+              />
+            </div>
+          )}
 
           <label>Valor total</label>
           <input

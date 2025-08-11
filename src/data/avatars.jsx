@@ -11,12 +11,12 @@ export const avatarOptionsFuncionarios = [
 ];
 
 export const avatarOptionsCarros = [
-    { label: "Hatch", src: "/carros/Onix.png" },
-    { label: "Sedan", src: "/carros/Civic.png" },
-    { label: "SUV", src: "/carros/HR-V.png" },
-    { label: "Picape", src: "/carros/Strada.png" },
-    { label: "CrossOver", src: "/carros/Strada.png" },
-    { label: "Furgão", src: "/carros/Strada.png" },
-    { label: "Carro Antigo", src: "/carros/Strada.png" },
-    { label: "Luxo", src: "/carros/Strada.png" },
+    { label: "Hatch", src: "/carros/Hatch.png" },
+    { label: "Sedan", src: "/carros/Sedan.png" },
+    { label: "SUV", src: "/carros/SUV.png" },
+    { label: "Picape", src: "/carros/Picape.png" },
+    { label: "Classico", src: "/carros/Ford.png" },
+    { label: "Furgão", src: "/carros/Furgao.png" },
+    { label: "Carro Antigo", src: "/carros/CarroAntigo.png" },
+    { label: "Luxo", src: "/carros/Luxo.png" },
 ]

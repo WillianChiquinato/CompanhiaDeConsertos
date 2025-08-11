@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import FormatadorMoeda from "../Utilitario/util";
-import carroImageParticular from "./assets/Particulares.jpg";
-import carroImageSeguradora from "./assets/Seguradoras.jpg";
-import Filtro from "./assets/Filtro.png";
 import BotaoForms from "./assets/BotaoForms.png";
 import Modal from "../../Components/Carros/modal/modal";
 import ModalConfirma from "../../Components/Carros/modalConfirm/modalConfirma";
@@ -36,7 +33,7 @@ function CarrosItem({
   return (
     <div className="BoxCarrosList">
       <span className="TitleCarrosList">{title}</span>
-      <img src={image} alt={title} height={170} />
+      <img src={image} alt={title} />
       <span className="ConteudoCarrosList">
         <span className="TopicosTitle">🔹Tipo:</span> {type}
       </span>
@@ -140,10 +137,7 @@ export default function Carros() {
         value: carro.ValorTotal,
         type: tiposLookup[carro.FK_TipoCarro] || "desconhecido",
         owner: carro.Proprietario,
-        image:
-          tiposLookup[carro.FK_TipoCarro] === "particular"
-            ? carroImageParticular
-            : carroImageSeguradora,
+        image: carro.Imagem,
 
         Descricao: carro.Descricao,
         Data_Criacao: carro.Data_Criacao,

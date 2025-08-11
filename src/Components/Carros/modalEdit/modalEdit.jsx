@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import carroImageParticular from "../assets/Particulares.jpg";
-import carroImageSeguradora from "../assets/Seguradoras.jpg";
 import DescricaoIcon from "../assets/possessory.png";
 import ProprietarioIcon from "../assets/customer-service.png";
 import ValorTotalIcon from "../assets/money.png";
@@ -55,7 +53,7 @@ export default function ModalEditCarros({
       Id_Carro: formData.id,
       NomeVeiculo: formData.NomeVeiculo || formData.title,
       Data_Criacao: formData.Data_Criacao,
-      Imagem: "Golf.jpg", // Placeholder, adjust as needed
+      Imagem: formData.image || "",
       ValorTotal: parseFloat(String(formData.ValorTotal).replace(",", ".")),
       Descricao: formData.Descricao,
       FK_TipoCarro: tipoId,
@@ -100,14 +98,7 @@ export default function ModalEditCarros({
         </div>
 
         <div className="modal-image-edit">
-          <img
-            src={
-              formData.type === "particular"
-                ? carroImageParticular
-                : carroImageSeguradora
-            }
-            alt={formData.title}
-          />
+          <img src={formData.image} alt={formData.title} />
         </div>
 
         <form onSubmit={handleSubmit}>
